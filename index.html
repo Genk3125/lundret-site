@@ -75,7 +75,7 @@
         <a href="#features" class="text-sm font-semibold text-white/70 hover:text-white transition-colors">機能</a>
         <a href="./examples.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navExamples">活用事例</a>
         <a href="./contact.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navContact">お問い合わせ</a>
-        <a href="https://lundret.vercel.app" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
+        <a href="https://app.lundret.com" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -102,7 +102,7 @@
       <a href="#features" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileFeatures">機能</a>
       <a href="./examples.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileExamples">活用事例</a>
       <a href="./contact.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileContactLink">お問い合わせ</a>
-      <a href="https://lundret.vercel.app" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
+      <a href="https://app.lundret.com" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
       <a href="./contact.html?category=intro" id="mobileCtaBtn"
         class="mt-2 flex items-center justify-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2.5 rounded-lg transition-colors hover:bg-blue-500">
         <span id="mobileCtaText">無料で導入</span>
@@ -673,6 +673,18 @@
         }
       })();
 
+    })();
+  </script>
+  <script>
+    (function() {
+      var primary = 'https://app.lundret.com';
+      var fallback = 'https://lundret.vercel.app';
+      fetch(primary, { mode: 'no-cors', signal: AbortSignal.timeout(3000) })
+        .catch(function() {
+          document.querySelectorAll('#navLogin, #mobileLogin').forEach(function(el) {
+            el.href = fallback;
+          });
+        });
     })();
   </script>
 </body>
