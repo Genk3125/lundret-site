@@ -1,157 +1,225 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>お問い合わせ | LUNDRET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: "#197fe6"
+            brand: "#2563eb",
+            navy: "#060e21",
+            "navy-2": "#0d1a36",
           },
           fontFamily: {
-            display: ["Manrope", "Noto Sans JP", "sans-serif"]
-          }
-        }
-      }
+            sans: ["Manrope", "Noto Sans JP", "sans-serif"],
+          },
+        },
+      },
     };
   </script>
+  <style>
+    body { font-family: "Manrope", "Noto Sans JP", sans-serif; }
+    #nav { transition: background 0.3s, box-shadow 0.3s; }
+    #nav.scrolled { background: rgba(6,14,33,0.97) !important; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    #mobileMenu { transition: opacity 0.2s, transform 0.2s; }
+    #mobileMenu.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    #mobileMenu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  </style>
 </head>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<body class="bg-slate-50 text-slate-900 font-display antialiased">
-  <div class="min-h-screen">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
-        <a href="./index.html" class="flex items-center gap-2 text-slate-900 hover:text-primary transition-colors">
-          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
-          <span class="text-sm font-bold" id="contactBackText">トップへ戻る</span>
+  <!-- NAV -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 bg-navy/95 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between h-16">
+      <a href="./index.html" class="flex items-center gap-0 select-none">
+        <span class="text-xl font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-xl font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[10px] font-bold tracking-widest text-white/40 align-middle">(BETA)</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="./index.html#features" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navFeatures">機能</a>
+        <a href="./examples.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navExamples">活用事例</a>
+        <a href="./contact.html" class="text-sm font-semibold text-white transition-colors" id="navContact">お問い合わせ</a>
+        <a href="https://app.lundret.com" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center bg-white/10 rounded-full p-0.5 border border-white/10">
+          <button id="langBtnJa" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-white text-navy transition-all">JP</button>
+          <button id="langBtnEn" class="px-2.5 py-1 text-[11px] font-bold rounded-full text-white/60 hover:text-white transition-all">EN</button>
+        </div>
+        <a href="./contact.html?category=intro" id="navCta"
+          class="hidden sm:inline-flex items-center gap-1.5 bg-brand hover:bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">
+          <span id="navCtaText">無料で導入</span>
         </a>
-        <h1 class="text-base sm:text-lg font-black tracking-[0.06em]">
-          <span class="text-[#0f172a]">LUNDR</span><span class="text-[#2f6fdd]">ET</span><span
-            class="ml-2 align-middle text-[11px] font-bold tracking-[0.12em] text-slate-400">(BETA)</span>
-        </h1>
+        <button id="menuBtn" class="md:hidden p-2 text-white/70 hover:text-white" aria-label="メニュー">
+          <svg id="menuIconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menuIconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-    </header>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-navy-2 border-t border-white/5 px-5 py-4 flex flex-col gap-1">
+      <a href="./index.html#features" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileFeatures">機能</a>
+      <a href="./examples.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileExamples">活用事例</a>
+      <a href="./contact.html" class="py-2.5 text-sm font-semibold text-white transition-colors" id="mobileContactLink">お問い合わせ</a>
+      <a href="https://app.lundret.com" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
+      <a href="./contact.html?category=intro" id="mobileCtaBtn"
+        class="mt-2 flex items-center justify-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2.5 rounded-lg transition-colors hover:bg-blue-500">
+        <span id="mobileCtaText">無料で導入</span>
+      </a>
+    </div>
+  </nav>
 
-    <main class="px-4 py-10 sm:px-6 sm:py-14">
-      <div class="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[1.1fr_1fr]">
-        <section class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <p class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
-            CONTACT
-          </p>
-          <h2 class="mt-4 text-3xl font-black leading-tight tracking-[-0.02em] sm:text-4xl" id="contactPageTitle">
-            お問い合わせフォーム
-          </h2>
-          <p class="mt-4 text-[13.5px] leading-relaxed text-slate-600 sm:text-[15.5px]" id="contactLeadText">
-            LUNDRETに関するご相談、導入検討のご希望などを受け付けています。
-            内容を確認後、担当者よりご連絡いたします。
-          </p>
-          <div class="mt-8 space-y-4 rounded-xl border border-slate-200 bg-slate-50 p-5">
-            <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary">schedule</span>
-              <p class="text-sm text-slate-700" id="contactInfoReply">返信目安: 1〜3営業日</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary">support_agent</span>
-              <p class="text-sm text-slate-700" id="contactInfoSupport">導入相談 / その他に対応します</p>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-primary">verified_user</span>
-              <p class="text-sm text-slate-700" id="contactInfoPrivacy">入力情報はお問い合わせ対応の目的でのみ利用します</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/70 ring-1 ring-slate-200 sm:p-8">
-          <form class="space-y-5" id="contactForm" action="https://formsubmit.co/contact@lundret.com"
-            method="POST">
-            <input type="hidden" name="_subject" id="contactMailSubject" value="LUNDRET お問い合わせ" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_autoresponse" id="contactAutoResponse"
-              value="LUNDRETにお問い合わせいただきありがとうございます。内容を受け付けました。通常1〜3営業日以内に担当者よりご連絡いたします。お急ぎの場合は contact@lundret.com までご連絡ください。" />
-            <input type="hidden" name="_next" id="formNextUrl" value="" />
-            <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
-            <div>
-              <label for="company" id="labelCompany" class="mb-2 block text-sm font-bold text-slate-700">会社名 /
-                店舗名</label>
-              <input id="company" name="company" type="text"
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary"
-                placeholder="例）〇〇ランドリー" />
-            </div>
-
-            <div>
-              <label for="name" id="labelName" class="mb-2 block text-sm font-bold text-slate-700">お名前 <span
-                  class="text-rose-500">*</span></label>
-              <input id="name" name="name" type="text" required
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary"
-                placeholder="例）山田 太郎" />
-            </div>
-
-            <div>
-              <label for="email" id="labelEmail" class="mb-2 block text-sm font-bold text-slate-700">メールアドレス <span
-                  class="text-rose-500">*</span></label>
-              <input id="email" name="email" type="email" required
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary"
-                placeholder="example@company.com" />
-            </div>
-
-            <div>
-              <label for="phone" id="labelPhone" class="mb-2 block text-sm font-bold text-slate-700">電話番号</label>
-              <input id="phone" name="phone" type="tel"
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary"
-                placeholder="例）090-1234-5678" />
-            </div>
-
-            <div>
-              <label for="category" id="labelCategory" class="mb-2 block text-sm font-bold text-slate-700">お問い合わせ種別
-                <span class="text-rose-500">*</span></label>
-              <select id="category" name="category" required
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary">
-                <option id="categoryOptionPlaceholder" value="">選択してください</option>
-                <option id="categoryOptionIntro" value="intro">導入相談</option>
-                <option id="categoryOptionOther" value="other">その他</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="message" id="labelMessage" class="mb-2 block text-sm font-bold text-slate-700">お問い合わせ内容 <span
-                  class="text-slate-400 text-xs font-medium">（任意）</span></label>
-              <textarea id="message" name="message" rows="5"
-                class="block w-full rounded-lg border-slate-300 px-4 py-3 text-sm focus:border-primary focus:ring-primary"
-                placeholder="ご相談内容をご記入ください。（任意）"></textarea>
-            </div>
-
-            <button type="submit"
-              class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-blue-600 active:scale-[0.99]">
-              <span id="contactSubmitText">送信する</span>
-              <span class="material-symbols-outlined text-[18px]">send</span>
-            </button>
-
-            <p class="text-xs leading-relaxed text-slate-500" id="contactSubmitNote">
-              送信すると内容はメールで送信され、完了後このページへ戻ります。
-            </p>
-          </form>
-
-          <div id="contactSuccess"
-            class="mt-5 hidden rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium leading-relaxed text-emerald-700">
-            お問い合わせを受け付けました。確認メール（自動返信）を送信しています。通常1〜3営業日以内に担当者よりご連絡いたします。
-          </div>
-        </section>
-      </div>
-    </main>
+  <!-- PAGE HEADER -->
+  <div class="bg-navy pt-16">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-12 sm:py-16">
+      <p class="text-xs font-bold tracking-[0.18em] text-brand/80 uppercase mb-3">CONTACT</p>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-[-0.02em] text-white" id="contactPageTitle">お問い合わせ</h1>
+      <p class="mt-3 text-sm text-white/50" id="contactLeadText">LUNDRETに関するご相談、導入検討のご希望などを受け付けています。</p>
+    </div>
   </div>
+
+  <!-- CONTENT -->
+  <main class="bg-slate-50 px-5 sm:px-8 py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl grid lg:grid-cols-[1fr_1.1fr] gap-8 items-start">
+
+      <!-- Left: info -->
+      <div class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h2 class="text-lg font-black text-slate-800 mb-5" id="contactInfoHeading">お問い合わせについて</h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-700" id="contactInfoReply">返信目安: 1〜3営業日</p>
+                <p class="text-xs text-slate-500 mt-0.5" id="contactInfoReplyNote">内容を確認後、担当者よりご連絡いたします</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-700" id="contactInfoSupport">導入相談 / その他に対応します</p>
+                <p class="text-xs text-slate-500 mt-0.5" id="contactInfoSupportNote">どのようなご相談でもお気軽にどうぞ</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-slate-700" id="contactInfoPrivacy">入力情報はお問い合わせ対応の目的でのみ利用します</p>
+                <p class="text-xs text-slate-500 mt-0.5"><a href="./privacy.html" class="text-brand hover:underline" id="contactPrivacyLink">プライバシーポリシーを確認</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-navy rounded-2xl p-6 sm:p-8">
+          <p class="text-xs font-bold tracking-widest text-brand/70 uppercase mb-2">DIRECT</p>
+          <p class="text-sm text-white/60 mb-3" id="contactDirectNote">メールでの直接連絡も受け付けています</p>
+          <a href="mailto:contact@lundret.com" class="text-white font-bold hover:text-brand transition-colors text-sm">contact@lundret.com</a>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <form class="space-y-5" id="contactForm" action="https://formsubmit.co/contact@lundret.com" method="POST">
+          <input type="hidden" name="_subject" id="contactMailSubject" value="LUNDRET お問い合わせ" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_autoresponse" id="contactAutoResponse"
+            value="LUNDRETにお問い合わせいただきありがとうございます。内容を受け付けました。通常1〜3営業日以内に担当者よりご連絡いたします。お急ぎの場合は contact@lundret.com までご連絡ください。" />
+          <input type="hidden" name="_next" id="formNextUrl" value="" />
+          <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+
+          <div>
+            <label for="company" id="labelCompany" class="mb-2 block text-sm font-bold text-slate-700">会社名 / 店舗名</label>
+            <input id="company" name="company" type="text"
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors"
+              placeholder="例）〇〇ランドリー" />
+          </div>
+
+          <div>
+            <label for="name" id="labelName" class="mb-2 block text-sm font-bold text-slate-700">お名前 <span class="text-rose-500">*</span></label>
+            <input id="name" name="name" type="text" required
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors"
+              placeholder="例）山田 太郎" />
+          </div>
+
+          <div>
+            <label for="email" id="labelEmail" class="mb-2 block text-sm font-bold text-slate-700">メールアドレス <span class="text-rose-500">*</span></label>
+            <input id="email" name="email" type="email" required
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors"
+              placeholder="example@company.com" />
+          </div>
+
+          <div>
+            <label for="phone" id="labelPhone" class="mb-2 block text-sm font-bold text-slate-700">電話番号</label>
+            <input id="phone" name="phone" type="tel"
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors"
+              placeholder="例）090-1234-5678" />
+          </div>
+
+          <div>
+            <label for="category" id="labelCategory" class="mb-2 block text-sm font-bold text-slate-700">お問い合わせ種別 <span class="text-rose-500">*</span></label>
+            <select id="category" name="category" required
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors">
+              <option id="categoryOptionPlaceholder" value="">選択してください</option>
+              <option id="categoryOptionIntro" value="intro">導入相談</option>
+              <option id="categoryOptionOther" value="other">その他</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" id="labelMessage" class="mb-2 block text-sm font-bold text-slate-700">お問い合わせ内容 <span class="text-slate-400 text-xs font-medium">（任意）</span></label>
+            <textarea id="message" name="message" rows="5"
+              class="block w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:border-brand focus:ring-brand focus:bg-white transition-colors"
+              placeholder="ご相談内容をご記入ください。（任意）"></textarea>
+          </div>
+
+          <button type="submit"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-blue-500 active:scale-[0.99]">
+            <span id="contactSubmitText">送信する</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </button>
+
+          <p class="text-xs leading-relaxed text-slate-500 text-center" id="contactSubmitNote">
+            送信すると内容はメールで送信され、完了後このページへ戻ります。
+          </p>
+        </form>
+
+        <div id="contactSuccess"
+          class="mt-5 hidden rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium leading-relaxed text-emerald-700">
+          お問い合わせを受け付けました。確認メール（自動返信）を送信しています。通常1〜3営業日以内に担当者よりご連絡いたします。
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t border-white/5">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-0">
+        <span class="text-base font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-base font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[9px] font-bold tracking-widest text-white/30">(BETA)</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <a href="./privacy.html" class="text-xs text-white/40 hover:text-white/70 transition-colors" id="footerPrivacy">プライバシーポリシー</a>
+        <a href="./terms.html" class="text-xs text-white/40 hover:text-white/70 transition-colors" id="footerTerms">利用規約</a>
+        <a href="mailto:contact@lundret.com" class="text-xs text-white/40 hover:text-white/70 transition-colors">contact@lundret.com</a>
+      </div>
+      <p class="text-xs text-white/30" id="footerCopyright">© 2026 近藤元樹</p>
+    </div>
+  </footer>
 
   <script>
     const form = document.getElementById('contactForm');
@@ -160,16 +228,41 @@
     const formNextUrl = document.getElementById('formNextUrl');
     const params = new URLSearchParams(window.location.search);
 
+    // Nav scroll
+    const navEl = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIconOpen = document.getElementById('menuIconOpen');
+    const menuIconClose = document.getElementById('menuIconClose');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      mobileMenu.classList.toggle('open', !isOpen);
+      menuIconOpen.classList.toggle('hidden', !isOpen);
+      menuIconClose.classList.toggle('hidden', isOpen);
+    });
+
     const pageTexts = {
       ja: {
-        docLang: 'ja',
-        title: 'お問い合わせ | LUNDRET',
-        backText: 'トップへ戻る',
-        pageTitle: 'お問い合わせフォーム',
-        leadText: 'LUNDRETに関するご相談、導入検討のご希望などを受け付けています。内容を確認後、担当者よりご連絡いたします。',
-        infoReply: '返信目安: 1〜3営業日',
-        infoSupport: '導入相談 / その他に対応します',
-        infoPrivacy: '入力情報はお問い合わせ対応の目的でのみ利用します',
+        docLang: 'ja', title: 'お問い合わせ | LUNDRET',
+        navFeatures: '機能', navExamples: '活用事例', navContact: 'お問い合わせ', navLogin: 'ログイン',
+        navCtaText: '無料で導入', mobileFeatures: '機能', mobileExamples: '活用事例',
+        mobileContactLink: 'お問い合わせ', mobileCtaText: '無料で導入', mobileLogin: 'ログイン',
+        contactPageTitle: 'お問い合わせ',
+        contactLeadText: 'LUNDRETに関するご相談、導入検討のご希望などを受け付けています。',
+        contactInfoHeading: 'お問い合わせについて',
+        contactInfoReply: '返信目安: 1〜3営業日',
+        contactInfoReplyNote: '内容を確認後、担当者よりご連絡いたします',
+        contactInfoSupport: '導入相談 / その他に対応します',
+        contactInfoSupportNote: 'どのようなご相談でもお気軽にどうぞ',
+        contactInfoPrivacy: '入力情報はお問い合わせ対応の目的でのみ利用します',
+        contactPrivacyLink: 'プライバシーポリシーを確認',
+        contactDirectNote: 'メールでの直接連絡も受け付けています',
         mailSubject: 'LUNDRET お問い合わせ',
         autoResponse: 'LUNDRETにお問い合わせいただきありがとうございます。内容を受け付けました。通常1〜3営業日以内に担当者よりご連絡いたします。お急ぎの場合は contact@lundret.com までご連絡ください。',
         labelCompany: '会社名 / 店舗名',
@@ -178,46 +271,50 @@
         labelPhone: '電話番号',
         labelCategory: 'お問い合わせ種別 <span class="text-rose-500">*</span>',
         labelMessage: 'お問い合わせ内容 <span class="text-slate-400 text-xs font-medium">（任意）</span>',
-        phCompany: '例）〇〇ランドリー',
-        phName: '例）山田 太郎',
-        phEmail: 'example@company.com',
-        phPhone: '例）090-1234-5678',
+        phCompany: '例）〇〇ランドリー', phName: '例）山田 太郎',
+        phEmail: 'example@company.com', phPhone: '例）090-1234-5678',
         phMessage: 'ご相談内容をご記入ください。（任意）',
         categoryPlaceholder: '選択してください',
-        categoryIntro: '導入相談',
-        categoryOther: 'その他',
-        submitText: '送信する',
-        submitNote: '送信すると内容はメールで送信され、完了後このページへ戻ります。',
-        successText: 'お問い合わせを受け付けました。確認メール（自動返信）を送信しています。通常1〜3営業日以内に担当者よりご連絡いたします。'
+        categoryIntro: '導入相談', categoryOther: 'その他',
+        contactSubmitText: '送信する',
+        contactSubmitNote: '送信すると内容はメールで送信され、完了後このページへ戻ります。',
+        successText: 'お問い合わせを受け付けました。確認メール（自動返信）を送信しています。通常1〜3営業日以内に担当者よりご連絡いたします。',
+        footerPrivacy: 'プライバシーポリシー', footerTerms: '利用規約',
+        footerCopyright: '© 2026 近藤元樹',
       },
       en: {
-        docLang: 'en',
-        title: 'Contact | LUNDRET',
-        backText: 'Back to Top',
-        pageTitle: 'Contact Form',
-        leadText: 'We accept inquiries about LUNDRET and implementation consultations. After reviewing your message, a representative will contact you.',
-        infoReply: 'Typical response time: 1-3 business days',
-        infoSupport: 'We support implementation consultations / other inquiries',
-        infoPrivacy: 'Your information will only be used to respond to your inquiry',
+        docLang: 'en', title: 'Contact | LUNDRET',
+        navFeatures: 'Features', navExamples: 'Use Cases', navContact: 'Contact', navLogin: 'Log In',
+        navCtaText: 'Get Started', mobileFeatures: 'Features', mobileExamples: 'Use Cases',
+        mobileContactLink: 'Contact', mobileCtaText: 'Get Started', mobileLogin: 'Log In',
+        contactPageTitle: 'Contact Us',
+        contactLeadText: 'We accept inquiries about LUNDRET and implementation consultations.',
+        contactInfoHeading: 'About Inquiries',
+        contactInfoReply: 'Typical response time: 1–3 business days',
+        contactInfoReplyNote: 'A representative will contact you after reviewing your message',
+        contactInfoSupport: 'We support implementation consultations / other inquiries',
+        contactInfoSupportNote: 'Feel free to contact us with any question',
+        contactInfoPrivacy: 'Your information will only be used to respond to your inquiry',
+        contactPrivacyLink: 'View Privacy Policy',
+        contactDirectNote: 'You can also reach us directly by email',
         mailSubject: 'LUNDRET Contact Inquiry',
-        autoResponse: 'Thank you for contacting LUNDRET. We have received your inquiry. A representative will usually contact you within 1-3 business days. If your request is urgent, please contact contact@lundret.com.',
+        autoResponse: 'Thank you for contacting LUNDRET. We have received your inquiry. A representative will usually contact you within 1–3 business days. If urgent, please contact contact@lundret.com.',
         labelCompany: 'Company / Store Name',
         labelName: 'Name <span class="text-rose-500">*</span>',
         labelEmail: 'Email Address <span class="text-rose-500">*</span>',
         labelPhone: 'Phone Number',
         labelCategory: 'Inquiry Type <span class="text-rose-500">*</span>',
         labelMessage: 'Message <span class="text-slate-400 text-xs font-medium">(Optional)</span>',
-        phCompany: 'e.g. ABC Laundry',
-        phName: 'e.g. John Smith',
-        phEmail: 'example@company.com',
-        phPhone: 'e.g. +81-90-1234-5678',
+        phCompany: 'e.g. ABC Laundry', phName: 'e.g. John Smith',
+        phEmail: 'example@company.com', phPhone: 'e.g. +81-90-1234-5678',
         phMessage: 'Please enter your message. (Optional)',
         categoryPlaceholder: 'Please select',
-        categoryIntro: 'Implementation Consultation',
-        categoryOther: 'Other',
-        submitText: 'Send',
-        submitNote: 'Submitting the form will send your message by email and then return you to this page.',
-        successText: 'Your inquiry has been received. A confirmation email (auto-reply) has been sent. A representative will usually contact you within 1-3 business days.'
+        categoryIntro: 'Implementation Consultation', categoryOther: 'Other',
+        contactSubmitText: 'Send',
+        contactSubmitNote: 'Submitting the form will send your message by email and return you to this page.',
+        successText: 'Your inquiry has been received. A confirmation email has been sent. A representative will usually contact you within 1–3 business days.',
+        footerPrivacy: 'Privacy Policy', footerTerms: 'Terms of Service',
+        footerCopyright: '© 2026 Genki Kondo',
       }
     };
 
@@ -225,7 +322,6 @@
       const el = document.getElementById(id);
       if (el) el.innerHTML = value;
     }
-
     function setText(id, value) {
       const el = document.getElementById(id);
       if (el) el.textContent = value;
@@ -235,13 +331,26 @@
       const t = pageTexts[lang] || pageTexts.ja;
       document.documentElement.lang = t.docLang;
       document.title = t.title;
-
-      setText('contactBackText', t.backText);
-      setText('contactPageTitle', t.pageTitle);
-      setText('contactLeadText', t.leadText);
-      setText('contactInfoReply', t.infoReply);
-      setText('contactInfoSupport', t.infoSupport);
-      setText('contactInfoPrivacy', t.infoPrivacy);
+      setText('navFeatures', t.navFeatures);
+      setText('navExamples', t.navExamples);
+      setText('navContact', t.navContact);
+      setText('navLogin', t.navLogin);
+      setText('navCtaText', t.navCtaText);
+      setText('mobileFeatures', t.mobileFeatures);
+      setText('mobileExamples', t.mobileExamples);
+      setText('mobileContactLink', t.mobileContactLink);
+      setText('mobileLogin', t.mobileLogin);
+      setText('mobileCtaText', t.mobileCtaText);
+      setText('contactPageTitle', t.contactPageTitle);
+      setText('contactLeadText', t.contactLeadText);
+      setText('contactInfoHeading', t.contactInfoHeading);
+      setText('contactInfoReply', t.contactInfoReply);
+      setText('contactInfoReplyNote', t.contactInfoReplyNote);
+      setText('contactInfoSupport', t.contactInfoSupport);
+      setText('contactInfoSupportNote', t.contactInfoSupportNote);
+      setText('contactInfoPrivacy', t.contactInfoPrivacy);
+      setText('contactPrivacyLink', t.contactPrivacyLink);
+      setText('contactDirectNote', t.contactDirectNote);
       setHtml('labelCompany', t.labelCompany);
       setHtml('labelName', t.labelName);
       setHtml('labelEmail', t.labelEmail);
@@ -251,9 +360,12 @@
       setText('categoryOptionPlaceholder', t.categoryPlaceholder);
       setText('categoryOptionIntro', t.categoryIntro);
       setText('categoryOptionOther', t.categoryOther);
-      setText('contactSubmitText', t.submitText);
-      setText('contactSubmitNote', t.submitNote);
+      setText('contactSubmitText', t.contactSubmitText);
+      setText('contactSubmitNote', t.contactSubmitNote);
       setText('contactSuccess', t.successText);
+      setText('footerPrivacy', t.footerPrivacy);
+      setText('footerTerms', t.footerTerms);
+      setText('footerCopyright', t.footerCopyright);
 
       const company = document.getElementById('company');
       const name = document.getElementById('name');
@@ -262,7 +374,6 @@
       const message = document.getElementById('message');
       const mailSubject = document.getElementById('contactMailSubject');
       const autoResponse = document.getElementById('contactAutoResponse');
-
       if (company) company.placeholder = t.phCompany;
       if (name) name.placeholder = t.phName;
       if (email) email.placeholder = t.phEmail;
@@ -276,20 +387,14 @@
     const langParam = params.get('lang');
     if (langParam === 'en' || langParam === 'ja') {
       currentLang = langParam;
-      try {
-        localStorage.setItem('lundret_lang', currentLang);
-      } catch (_) { }
+      try { localStorage.setItem('lundret_lang', currentLang); } catch (_) {}
     } else {
-      try {
-        currentLang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja';
-      } catch (_) { }
+      try { currentLang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja'; } catch (_) {}
     }
     applyLanguage(currentLang);
 
     const categoryParam = params.get('category');
-    if (categorySelect && categoryParam === 'intro') {
-      categorySelect.value = 'intro';
-    }
+    if (categorySelect && categoryParam === 'intro') categorySelect.value = 'intro';
 
     if (formNextUrl) {
       const nextUrl = new URL(window.location.href);
@@ -301,7 +406,32 @@
       success?.classList.remove('hidden');
       success?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+
+    // Lang buttons
+    document.getElementById('langBtnJa').addEventListener('click', () => {
+      currentLang = 'ja';
+      try { localStorage.setItem('lundret_lang', 'ja'); } catch (_) {}
+      applyLanguage('ja');
+      document.getElementById('langBtnJa').classList.add('bg-white', 'text-navy');
+      document.getElementById('langBtnJa').classList.remove('text-white/60');
+      document.getElementById('langBtnEn').classList.remove('bg-white', 'text-navy');
+      document.getElementById('langBtnEn').classList.add('text-white/60');
+    });
+    document.getElementById('langBtnEn').addEventListener('click', () => {
+      currentLang = 'en';
+      try { localStorage.setItem('lundret_lang', 'en'); } catch (_) {}
+      applyLanguage('en');
+      document.getElementById('langBtnEn').classList.add('bg-white', 'text-navy');
+      document.getElementById('langBtnEn').classList.remove('text-white/60');
+      document.getElementById('langBtnJa').classList.remove('bg-white', 'text-navy');
+      document.getElementById('langBtnJa').classList.add('text-white/60');
+    });
+    if (currentLang === 'en') {
+      document.getElementById('langBtnEn').classList.add('bg-white', 'text-navy');
+      document.getElementById('langBtnEn').classList.remove('text-white/60');
+      document.getElementById('langBtnJa').classList.remove('bg-white', 'text-navy');
+      document.getElementById('langBtnJa').classList.add('text-white/60');
+    }
   </script>
 </body>
-
 </html>

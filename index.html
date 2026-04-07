@@ -1,626 +1,679 @@
 <!DOCTYPE html>
-<html class="light" lang="ja">
-
+<html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-  <title>LUNDRET - AI Laundromat Solutions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUNDRET — AIでコインランドリー経営をスマートに</title>
   <meta name="description" content="LUNDRETは、コインランドリー向けのAIソリューションです。リアルタイム稼働監視・AIインサイト・ダイナミックプライシングで店舗運営を革新します。" />
   <meta property="og:title" content="LUNDRET - AI Laundromat Solutions" />
-  <meta property="og:description" content="LUNDRETは、コインランドリー向けのAIソリューションです。リアルタイム稼働監視・AIインサイト・ダイナミックプライシングで店舗運営を革新します。" />
+  <meta property="og:description" content="リアルタイム稼働監視・AIインサイトで店舗運営を革新。" />
   <meta property="og:url" content="https://lundret.com" />
   <meta property="og:type" content="website" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap"
-    rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            "primary": "#197fe6",
-            "background-light": "#ffffff",
-            "background-dark": "#111418",
-            "surface-dark": "#1c2126",
-            "surface-light": "#f8f9fa",
-            "accent": "#eef2f6"
+            brand: "#2563eb",
+            navy: "#060e21",
+            "navy-2": "#0d1a36",
           },
           fontFamily: {
-            "display": ["Manrope", "Noto Sans JP", "sans-serif"],
-            "body": ["Manrope", "Noto Sans JP", "sans-serif"],
+            sans: ["Manrope", "Noto Sans JP", "sans-serif"],
           },
-          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
         },
       },
-    }
+    };
   </script>
   <style>
-    ::-webkit-scrollbar {
-      width: 8px;
+    body { font-family: "Manrope", "Noto Sans JP", sans-serif; }
+
+    /* NAV scroll effect */
+    #nav { transition: background 0.3s, box-shadow 0.3s; }
+    #nav.scrolled { background: rgba(6,14,33,0.97) !important; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+
+    /* Animated grid background in hero */
+    .hero-grid {
+      background-image:
+        linear-gradient(rgba(37,99,235,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.08) 1px, transparent 1px);
+      background-size: 48px 48px;
     }
 
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
+    /* Feature card hover */
+    .feat-card { transition: transform 0.25s, box-shadow 0.25s; }
+    .feat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px -8px rgba(37,99,235,0.12); }
 
-    ::-webkit-scrollbar-thumb {
-      background: #c1c1c1;
-      border-radius: 4px;
-    }
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: #a8a8a8;
-    }
-  </style>
-  <style>
-    /* Desktop-safe defaults */
-    body {
-      min-height: max(884px, 100dvh);
-    }
+    /* Mobile menu */
+    #mobileMenu { transition: opacity 0.2s, transform 0.2s; }
+    #mobileMenu.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    #mobileMenu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
 
-    /* ===== Mobile-only overrides (does NOT affect desktop at all) ===== */
-    @media (max-width: 639px) {
-      body {
-        min-height: 100dvh !important;
-      }
-
-      /* Reduce hero banner height on small screens */
-      .hero-top-section {
-        min-height: 440px !important;
-      }
-
-      /* Reduce top padding of hero content */
-      .hero-top-content {
-        padding-top: 2rem !important;
-        padding-bottom: 3rem !important;
-      }
-
-      /* Shrink the gap between top hero and second hero */
-      .hero-spacer {
-        height: 0.5rem !important;
-      }
-
-      /* Tighten second hero section vertical padding and fix left clipping */
-      .hero-swap-section {
-        padding-top: 2.5rem !important;
-        padding-bottom: 2.5rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        gap: 2.5rem !important;
-        align-items: flex-start !important;
-      }
-
-      /* Ensure text blocks are full width to avoid weird centering shifts */
-      .hero-copy-lock-mobile {
-        width: 100% !important;
-        max-width: 100% !important;
-      }
-
-      /* Make description box fit better */
-      .landing-desc-box {
-        display: inline-block !important;
-        width: auto !important;
-        max-width: 92% !important;
-        margin-right: auto !important;
-      }
-
-      /* Adjust device stage height */
-      .device-stage-mobile {
-        height: 460px !important;
-      }
-    }
+    /* Slide dot transition */
+    .slide-dot { transition: width 0.3s, background 0.3s, border-radius 0.3s; }
   </style>
 </head>
+<body class="bg-white text-slate-900 antialiased overflow-x-hidden">
 
-<body class="bg-white text-slate-900 font-display antialiased overflow-x-hidden">
-  <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
-    <header
-      class="sticky top-0 z-50 flex items-center bg-white/90 backdrop-blur-md p-4 pb-2 justify-between border-b border-slate-100 px-4 sm:px-6">
-      <div class="flex items-center sm:translate-x-[11px]">
-        <h2 class="text-2xl font-black leading-none tracking-[0.08em]">
-          <span class="text-[#0f172a]">LUNDR</span><span class="text-[#2f6fdd]">ET</span>
-          <span class="ml-2 align-middle text-[11px] font-bold tracking-[0.12em] text-slate-400">(BETA)</span>
-        </h2>
+  <!-- ===== NAV ===== -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 bg-navy/80 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between h-16">
+      <a href="./index.html" class="flex items-center gap-0 select-none">
+        <span class="text-xl font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-xl font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[10px] font-bold tracking-widest text-white/40 align-middle">(BETA)</span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#features" class="text-sm font-semibold text-white/70 hover:text-white transition-colors">機能</a>
+        <a href="./examples.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navExamples">活用事例</a>
+        <a href="./contact.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navContact">お問い合わせ</a>
+        <a href="https://app.lundret.com" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
       </div>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center bg-slate-100 rounded-full p-1 relative border border-slate-200">
-          <button
-            class="px-2 py-1 text-[11px] sm:px-3 sm:text-xs font-bold rounded-full bg-white text-primary shadow-sm ring-1 ring-slate-200 transition-all"
-            id="langBtnJa" type="button">JP</button>
-          <button class="px-2 py-1 text-[11px] sm:px-3 sm:text-xs font-bold rounded-full text-slate-500 hover:text-slate-700 transition-all"
-            id="langBtnEn" type="button">EN</button>
+
+      <div class="flex items-center gap-3">
+        <!-- Lang toggle -->
+        <div class="flex items-center bg-white/10 rounded-full p-0.5 border border-white/10">
+          <button id="langBtnJa" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-white text-navy transition-all">JP</button>
+          <button id="langBtnEn" class="px-2.5 py-1 text-[11px] font-bold rounded-full text-white/60 hover:text-white transition-all">EN</button>
         </div>
-</div>
-    </header>
-    <main class="flex-1 bg-white">
-      <div class="@container">
-        <section
-          class="hero-top-section relative w-full min-h-[600px] lg:min-h-[700px] flex flex-col justify-end overflow-hidden group">
-          <div class="absolute inset-0 z-0">
-            <img alt="Modern bright laundromat interior"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqWKXky6tghW0-LtUjmacEkGqFEAI1r40MKsIi62cOZUHXl9H67bo04HY1wm1COCMricA2dEQgC85ZA63c9ruFtRpLbczjPAYB34kTO-9FTyfPYuQkety08hlMOlkK_u3Akg-TOSRU_rANfiNr2jBgxS0mdpwfLOs0jaARqmOTuVKES6ggOt867eiwTxtFSAoIQPLmc70nQGAWyF1lREfxjJtQyBoaiq_odpFgtPgN0hHu085gjvfz0pay9UBxZnQYCvzcwaruh1I" />
-            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/10"></div>
-            <div class="absolute inset-0 bg-white/20 backdrop-blur-[2px]"></div>
-          </div>
-          <div
-            class="hero-top-content relative z-10 w-full max-w-7xl mx-auto px-4 pb-16 pt-20 flex flex-col gap-8 @[480px]:px-8 @[800px]:pb-24">
-            <div class="flex flex-col gap-4 max-w-3xl">
-              <h2
-                class="text-3xl font-black leading-tight tracking-[-0.02em] text-slate-900 @[480px]:text-5xl @[800px]:text-7xl drop-shadow-sm"
-                id="landingTopTitle">
-                AIで<br class="@[600px]:hidden" />コインランドリー<br />経営をスマートに
-              </h2>
-              <p class="landing-desc-box block w-full sm:inline-block sm:w-auto self-start text-sm text-slate-600 font-medium leading-relaxed max-w-xl @[480px]:text-lg bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-white/50 shadow-sm"
-                id="landingTopDesc">
-                リアルタイムで洗濯機の状況を確認でき、データを<br />グラフ化し、また、それをAIが分析し提案を行います。
-              </p>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-4 mt-2">
-              <a class="flex items-center justify-center gap-2 h-14 px-8 rounded-lg bg-primary hover:bg-blue-600 text-white text-base font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95 group/btn ring-1 ring-blue-700/20"
-                href="./contact.html" id="landingContactLink">
-                <span id="landingTopCta">お問い合わせ</span>
-                <span
-                  class="material-symbols-outlined text-[20px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
-              </a>
-            </div>
-          </div>
-        </section>
-        <div class="hero-spacer h-10 lg:h-14"></div>
-        <section class="relative lg:h-[calc(100vh+900px)]" id="heroPinSection">
-          <div class="lg:sticky lg:top-[52px]">
-            <div
-              class="hero-swap-section flex flex-col lg:flex-row gap-12 lg:gap-20 px-4 py-12 lg:px-10 lg:py-24 items-center justify-between max-w-7xl mx-auto"
-              id="heroSwapSection">
-              <div class="hero-copy-lock-mobile flex flex-col gap-8 max-w-2xl lg:w-1/2 z-10 order-1" id="heroCopyLock">
-                <div class="flex flex-col gap-5 text-left">
-                  <h1
-                    class="text-slate-900 text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-[-0.033em]"
-                    id="dashboardHeroTitle">
-                    稼働率を最大化する<br /><span class="text-primary">AIソリューション</span>
-                  </h1>
-                  <h2 class="text-slate-600 text-sm sm:text-[17px] font-medium leading-relaxed max-w-lg">
-                    <span class="block whitespace-nowrap overflow-hidden text-ellipsis" id="dashboardHeroSub1">Real-time
-                      monitoring &amp; AI Analytics for your laundromat business.</span>
-                    <span class="block" id="dashboardHeroSub2">データに基づいた意思決定で、収益を最大化しましょう。</span>
-                  </h2>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-4 mt-2">
-                  <a class="flex min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-slate-900 hover:bg-slate-800 text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors shadow-xl shadow-slate-900/10"
-                    href="./contact.html?category=intro" id="heroContactLink">
-                    <span class="truncate" id="dashboardHeroPrimaryCta">無料で導入</span>
-                    <span class="material-symbols-outlined ml-2 text-[20px]">arrow_forward</span>
-                  </a>
-                  <a class="flex min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-white hover:bg-slate-50 text-slate-900 text-base font-bold leading-normal tracking-[0.015em] border border-slate-200 transition-colors shadow-sm"
-                    href="./examples.html">
-                    <span class="truncate" id="dashboardHeroSecondaryCta">活用事例</span>
-                  </a>
-                </div>
-              </div>
-              <div class="relative w-full lg:w-1/2 flex justify-center lg:justify-end lg:pr-8 order-2">
-                <div
-                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-slate-100 to-primary/5 rounded-full blur-[80px] pointer-events-none -z-10">
-                </div>
-                <div class="device-stage-mobile relative z-10 h-[520px] sm:h-[620px] w-[296px] sm:w-[420px]"
-                  id="deviceSwapStage">
-                  <div class="absolute inset-0 hidden lg:flex items-end justify-center pointer-events-none opacity-0"
-                    id="imacMock">
-                    <div class="w-[338px] sm:w-[428px]">
-                      <div
-                        class="rounded-[1.8rem] border-[6px] border-slate-500 bg-slate-400 p-2.5 shadow-[0_20px_45px_-25px_rgba(51,65,85,0.35)]">
-                        <div
-                          class="h-[188px] sm:h-[230px] rounded-[1.1rem] border border-slate-300/80 bg-white overflow-hidden">
-                          <img alt="LUNDRET desktop dashboard preview"
-                            class="h-full w-full object-cover object-left-top" draggable="false"
-                            src="./imac-dashboard-2.png" />
-                        </div>
-                      </div>
-                      <div class="mx-auto h-4 w-16 rounded-b-xl bg-slate-400"></div>
-                      <div class="mx-auto mt-1.5 h-2.5 w-28 rounded-full bg-slate-400/90"></div>
-                    </div>
-                  </div>
-                  <div class="absolute inset-0 flex items-end justify-center pointer-events-none" id="phoneMock">
-                    <div
-                      class="phone-mock-mobile w-[260px] sm:w-[320px] rounded-[2.5rem] border-[8px] border-slate-900 bg-slate-900 shadow-2xl shadow-slate-200 overflow-hidden aspect-[9/16]">
-                      <div class="relative h-full w-full rounded-[2rem] bg-slate-900 overflow-hidden">
-                        <div class="absolute top-0 w-full h-6 bg-slate-900 z-20">
-                          <div class="w-16 h-4 bg-black rounded-b-xl mx-auto"></div>
-                        </div>
-                        <div class="absolute inset-x-0 top-6 bottom-8 bg-white overflow-hidden">
-                          <div class="relative h-full w-full overflow-hidden bg-white" id="dashboardPreviewViewport">
-                            <img alt="LUNDRET dashboard preview"
-                              class="pointer-events-none absolute inset-x-0 top-0 h-auto w-full max-w-none select-none"
-                              id="dashboardPreviewImage" src="./UI.png" />
-                          </div>
-                        </div>
-                        <div class="absolute inset-x-8 bottom-5 h-px bg-white/20"></div>
-                        <div class="absolute bottom-2 left-1/2 h-1.5 w-24 -translate-x-1/2 rounded-full bg-white/80">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- CTA -->
+        <a href="./contact.html?category=intro" id="navCta"
+          class="hidden sm:inline-flex items-center gap-1.5 bg-brand hover:bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">
+          <span id="navCtaText">無料で導入</span>
+        </a>
+        <!-- Mobile hamburger -->
+        <button id="menuBtn" class="md:hidden p-2 text-white/70 hover:text-white" aria-label="メニュー">
+          <svg id="menuIconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menuIconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-      </section>
-      <div class="px-4 py-12 lg:py-20 lg:px-10 max-w-7xl mx-auto bg-white">
-        <div class="flex flex-col gap-4 mb-12 text-center">
-          <h2 class="text-slate-900 text-2xl sm:text-4xl font-black leading-tight tracking-[-0.02em]"
-            id="featuresTitle">
-            店舗運営のすべてを、<br class="sm:hidden" />手のひらで。
-          </h2>
-          <p class="text-slate-500 text-sm sm:text-lg font-medium leading-relaxed max-w-2xl mx-auto" id="featuresLead">
-            遠隔監視から売上分析まで。<br class="hidden sm:block" />LUNDRETはオーナー様の業務を劇的に効率化します。
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-navy-2 border-t border-white/5 px-5 py-4 flex flex-col gap-1">
+      <a href="#features" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileFeatures">機能</a>
+      <a href="./examples.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileExamples">活用事例</a>
+      <a href="./contact.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileContactLink">お問い合わせ</a>
+      <a href="https://app.lundret.com" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
+      <a href="./contact.html?category=intro" id="mobileCtaBtn"
+        class="mt-2 flex items-center justify-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2.5 rounded-lg transition-colors hover:bg-blue-500">
+        <span id="mobileCtaText">無料で導入</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO (scrollytelling — 300vh wrapper keeps section sticky) ===== -->
+  <div id="heroScrollWrapper" style="height: 300vh;">
+    <section id="heroSection" class="relative bg-navy flex flex-col items-center justify-center pt-16"
+      style="position: sticky; top: 0; height: 100dvh; overflow: hidden;">
+
+      <!-- Star field -->
+      <div id="starField" class="absolute inset-0 pointer-events-none"></div>
+      <!-- Grid bg -->
+      <div class="hero-grid absolute inset-0 pointer-events-none"></div>
+      <!-- Gradient orbs -->
+      <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-brand/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-900/40 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 py-12 lg:py-20 flex flex-col lg:flex-row items-center gap-10 lg:gap-20 h-full">
+
+        <!-- Copy (left) -->
+        <div class="flex-1 flex flex-col items-start gap-6 max-w-2xl">
+          <div class="inline-flex items-center gap-2 bg-brand/15 border border-brand/30 rounded-full px-4 py-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+            <span class="text-xs font-bold tracking-widest text-brand/90 uppercase">AI × コインランドリー</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] tracking-[-0.03em] text-white" id="heroTitle">
+            稼働率を最大化する<br /><span class="text-brand">AIソリューション</span>
+          </h1>
+          <p class="text-base sm:text-lg text-white/60 font-medium leading-relaxed max-w-lg">
+            <span class="block text-white/40 text-sm font-semibold mb-1" id="heroSubEn">Real-time monitoring &amp; AI Analytics for your laundromat business.</span>
+            <span id="heroSubJa">データに基づいた意思決定で、収益を最大化しましょう。</span>
           </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div
-            class="group flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-8 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
-            <div
-              class="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-              <span class="material-symbols-outlined text-[32px]">visibility</span>
-            </div>
-            <div class="flex flex-col gap-3">
-              <h3 class="text-slate-900 text-xl font-bold leading-tight" id="feature1Title">リアルタイム監視</h3>
-              <p class="text-slate-500 text-sm leading-relaxed font-medium" id="feature1Desc">
-                店舗の状況をどこからでも確認。マシンの稼働状況をリアルタイムで把握できます。
-              </p>
-            </div>
-          </div>
-          <div
-            class="group flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-8 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
-            <div
-              class="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-              <span class="material-symbols-outlined text-[32px]">auto_awesome</span>
-            </div>
-            <div class="flex flex-col gap-3">
-              <h3 class="text-slate-900 text-xl font-bold leading-tight" id="feature2Title">AIによるデータ分析</h3>
-              <p class="text-slate-500 text-sm leading-relaxed font-medium" id="feature2Desc">
-                AIがデータを分析し、具体的な施策を提案します。
-              </p>
-            </div>
-          </div>
-          <div
-            class="group flex flex-col gap-5 rounded-2xl border border-slate-100 bg-white p-8 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
-            <div
-              class="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-              <span class="material-symbols-outlined text-[32px]">analytics</span>
-            </div>
-            <div class="flex flex-col gap-3">
-              <h3 class="text-slate-900 text-xl font-bold leading-tight" id="feature3Title">データの蓄積</h3>
-              <p class="text-slate-500 text-sm leading-relaxed font-medium" id="feature3Desc">
-                稼働台数、放置率、売上などのデータを蓄積し、グラフ化します。
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="px-4 pb-20">
-        <div
-          class="relative overflow-hidden rounded-3xl bg-slate-900 px-6 py-16 text-center md:px-16 max-w-7xl mx-auto shadow-2xl shadow-slate-200">
-          <div class="absolute top-0 right-0 w-full h-full opacity-20"
-            style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
-          <div class="relative z-10 flex flex-col items-center gap-6">
-            <h2 class="text-white text-2xl font-black leading-tight sm:text-4xl lg:text-5xl max-w-3xl"
-              id="bottomCtaTitle">
-              あなたのコインランドリー経営を、<br />次のレベルへ。
-            </h2>
-            <p class="text-slate-300 text-base font-medium max-w-lg" id="bottomCtaDesc">
-              無料でAIによる効率化を体験してください。
-            </p>
-            <a class="flex min-w-[200px] cursor-pointer items-center justify-center rounded-lg bg-primary hover:bg-blue-600 h-14 px-10 text-white text-lg font-bold transition-all hover:scale-105 shadow-lg shadow-primary/30"
-              href="./contact.html?category=intro" id="bottomContactLink">
-              <span id="bottomCtaButton">無料で導入</span>
+          <div class="flex flex-col sm:flex-row gap-3 mt-1">
+            <a href="./contact.html?category=intro" id="heroCta1"
+              class="inline-flex items-center justify-center gap-2 bg-brand hover:bg-blue-500 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-all hover:scale-[1.02] shadow-lg shadow-brand/30">
+              <span id="heroCta1Text">無料で導入</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </a>
+            <a href="./examples.html" id="heroCta2"
+              class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-all">
+              <span id="heroCta2Text">活用事例</span>
             </a>
           </div>
         </div>
-      </div>
-    </main>
-    <footer class="flex flex-col gap-8 px-5 py-12 text-center border-t border-slate-100 bg-white">
-      <div class="relative left-[3px] flex flex-wrap items-center justify-center gap-8 sm:justify-center">
-        <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors" href="./privacy.html"
-          id="footerPrivacy">プライバシーポリシー</a>
-        <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors" href="./terms.html"
-          id="footerTerms">利用規約</a>
-        <a class="text-slate-500 text-sm font-medium hover:text-primary transition-colors" href="./contact.html"
-          id="footerContact">お問い合わせ</a>
-      </div>
-    </footer>
-  </div>
-  <script>
-      (() => {
-        const SCROLL_DAMPING = 0.38;
-        const SCROLL_EASE = 0.28;
-        const previewViewport = document.getElementById('dashboardPreviewViewport');
-        const previewImage = document.getElementById('dashboardPreviewImage');
-        const phoneMock = document.getElementById('phoneMock');
-        const imacMock = document.getElementById('imacMock');
-        const deviceSwapStage = document.getElementById('deviceSwapStage');
-        const heroPinSection = document.getElementById('heroPinSection');
-        const langBtnJa = document.getElementById('langBtnJa');
-        const langBtnEn = document.getElementById('langBtnEn');
-        const landingContactLink = document.getElementById('landingContactLink');
-        const heroContactLink = document.getElementById('heroContactLink');
-        const bottomContactLink = document.getElementById('bottomContactLink');
-        const footerContactLink = document.getElementById('footerContact');
-        const IMAGE_SCROLL_RANGE = 460;
-        const SWAP_RANGE = 440;
-        let targetScrollY = window.scrollY;
-        let wheelRaf = 0;
-        let syncRaf = 0;
 
-        const translations = {
-          ja: {
-            title: 'LUNDRET - AI Laundromat Solutions',
-            landingTopTitle: 'AIで<br class="@[600px]:hidden"/>コインランドリー<br/>経営をスマートに',
-            landingTopDesc: 'リアルタイムで洗濯機の状況を確認でき、データを<br/>グラフ化し、また、それをAIが分析し提案を行います。',
-            landingTopCta: 'お問い合わせ',
-            dashboardHeroTitle: '稼働率を最大化する<br/><span class=\"text-primary\">AIソリューション</span>',
-            dashboardHeroSub1: 'Real-time monitoring &amp; AI Analytics for your laundromat business.',
-            dashboardHeroSub2: 'データに基づいた意思決定で、収益を最大化しましょう。',
-            dashboardHeroPrimaryCta: '無料で導入',
-            dashboardHeroSecondaryCta: '活用事例',
-            featuresTitle: '店舗運営のすべてを、<br class=\"sm:hidden\"/>手のひらで。',
-            featuresLead: '遠隔監視から売上分析まで。<br class=\"hidden sm:block\"/>LUNDRETはオーナー様の業務を劇的に効率化します。',
-            feature1Title: 'リアルタイム監視',
-            feature1Desc: '店舗の状況をどこからでも確認。マシンの稼働状況をリアルタイムで把握できます。',
-            feature2Title: 'AIによるデータ分析',
-            feature2Desc: 'AIがデータを分析し、具体的な施策を提案します。',
-            feature3Title: 'データの蓄積',
-            feature3Desc: '稼働台数、放置率、売上などのデータを蓄積し、グラフ化します。',
-            bottomCtaTitle: 'あなたのコインランドリー経営を、<br/>次のレベルへ。',
-            bottomCtaDesc: '無料でAIによる効率化を体験してください。',
-            bottomCtaButton: '無料で導入',
-            footerPrivacy: 'プライバシーポリシー',
-            footerTerms: '利用規約',
-            footerContact: 'お問い合わせ'
-          },
-          en: {
-            title: 'LUNDRET - AI Laundromat Solutions',
-            landingTopTitle: 'Smarter Laundromat<br/>Management with AI',
-            landingTopDesc: 'Monitor washer status in real time, visualize your data,<br/>and get AI-powered analysis and recommendations.',
-            landingTopCta: 'Contact Us',
-            dashboardHeroTitle: 'Maximize Uptime with<br/><span class=\"text-primary\">AI Solutions</span>',
-            dashboardHeroSub1: 'Real-time monitoring &amp; AI Analytics for your laundromat business.',
-            dashboardHeroSub2: 'Make data-driven decisions to maximize your revenue.',
-            dashboardHeroPrimaryCta: 'Start Free',
-            dashboardHeroSecondaryCta: 'Use Cases',
-            featuresTitle: 'Everything for store operations,<br class=\"sm:hidden\"/>in your hand.',
-            featuresLead: 'From remote monitoring to sales analysis.<br class=\"hidden sm:block\"/>LUNDRET dramatically improves owner efficiency.',
-            feature1Title: 'Real-time Monitoring',
-            feature1Desc: 'Check store conditions from anywhere and monitor machine status in real time.',
-            feature2Title: 'AI Data Analysis',
-            feature2Desc: 'AI analyzes your data and recommends concrete actions.',
-            feature3Title: 'Data Accumulation',
-            feature3Desc: 'Accumulate operating counts, unattended rates, and sales data, then visualize them in charts.',
-            bottomCtaTitle: 'Take your laundromat business<br/>to the next level.',
-            bottomCtaDesc: 'Experience AI-powered efficiency improvements for free.',
-            bottomCtaButton: 'Start Free',
-            footerPrivacy: 'Privacy Policy',
-            footerTerms: 'Terms of Service',
-            footerContact: 'Contact'
+        <!-- PC Browser mockup with 3 slides (right) -->
+        <div class="flex-1 w-full">
+          <div class="relative">
+            <!-- Browser frame -->
+            <div class="rounded-2xl overflow-hidden shadow-2xl shadow-black/60 border border-white/10">
+              <!-- Browser chrome -->
+              <div class="bg-navy-2 px-4 py-3 flex items-center gap-2 border-b border-white/10">
+                <div class="flex gap-1.5 flex-shrink-0">
+                  <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-400/70"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/70"></div>
+                </div>
+                <div class="flex-1 mx-4 bg-white/5 rounded-md px-3 py-1 text-xs text-white/30 font-mono border border-white/10 truncate">
+                  lundret.com/dashboard&nbsp;/&nbsp;<span id="currentSlideLabel" class="text-white/60 font-semibold not-italic">ホーム</span>
+                </div>
+              </div>
+              <!-- Slides viewport -->
+              <div style="overflow:hidden;aspect-ratio:16/9;position:relative;">
+                <div id="slidesTrack" style="display:flex;width:300%;height:100%;transition:none;will-change:transform;">
+
+                  <!-- Slide 1: ホーム -->
+                  <div style="width:33.333%;flex-shrink:0;height:100%;">
+                    <img src="./imac-dashboard-2.png" alt="ホームダッシュボード"
+                      style="width:100%;height:100%;object-fit:cover;display:block;" draggable="false" />
+                  </div>
+
+                  <!-- Slide 2: データ (Lundret analytics tab) -->
+                  <div style="width:33.333%;flex-shrink:0;height:100%;background:#f8f9fb;display:flex;overflow:hidden;font-family:'Manrope','Noto Sans JP',sans-serif;">
+                    <!-- Sidebar -->
+                    <div style="width:100px;background:white;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;flex-shrink:0;padding:10px 0;overflow:hidden;">
+                      <div style="padding:0 8px 8px;border-bottom:1px solid #f1f5f9;margin-bottom:4px;">
+                        <span style="font-size:9px;font-weight:900;letter-spacing:0.05em;color:#0f172a;">LUNDR</span><span style="font-size:9px;font-weight:900;color:#4a89f3;">ET</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;padding:0 5px;gap:1px;">
+                        <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">ホーム</span></div>
+                        <div style="padding:4px 6px;border-radius:6px;background:#eff6ff;border:1px solid #bfdbfe;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#4a89f3;flex-shrink:0;"></div><span style="font-size:8px;color:#4a89f3;font-weight:700;">データ</span></div>
+                        <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">AIインサイト</span></div>
+                        <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">ライブ</span></div>
+                        <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">設定</span></div>
+                      </div>
+                    </div>
+                    <!-- Main content -->
+                    <div style="flex:1;padding:14px;display:flex;flex-direction:column;gap:9px;overflow:hidden;min-width:0;">
+                      <!-- Header -->
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div style="font-size:13px;font-weight:800;color:#0f172a;">データ分析</div>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                          <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;color:#64748b;"><div style="width:7px;height:7px;border-radius:50%;background:#4a89f3;"></div>稼働率</div>
+                          <div style="display:flex;align-items:center;gap:3px;font-size:7.5px;color:#64748b;"><div style="width:7px;height:7px;border-radius:50%;background:#ffa59a;"></div>未回収率</div>
+                        </div>
+                      </div>
+                      <!-- Controls -->
+                      <div style="display:flex;align-items:center;gap:6px;">
+                        <div style="background:white;border:1px solid #e5e7eb;border-radius:6px;padding:4px 8px;font-size:7.5px;color:#475569;font-weight:600;">今日の時間別 ▾</div>
+                        <div style="display:flex;background:#f1f5f9;border-radius:6px;padding:2px;gap:1px;">
+                          <div style="background:white;border-radius:4px;padding:2px 7px;font-size:7.5px;color:#0f172a;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,0.06);">棒グラフ</div>
+                          <div style="padding:2px 7px;font-size:7.5px;color:#94a3b8;font-weight:600;">折れ線</div>
+                        </div>
+                      </div>
+                      <!-- Chart card -->
+                      <div style="flex:1;background:white;border:1px solid #e5e7eb;border-radius:10px;padding:10px;display:flex;gap:6px;min-height:0;overflow:hidden;">
+                        <!-- Y-axis -->
+                        <div style="width:22px;display:flex;flex-direction:column;justify-content:space-between;flex-shrink:0;padding-bottom:14px;">
+                          <div style="font-size:6.5px;color:#94a3b8;text-align:right;">100%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;text-align:right;">75%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;text-align:right;">50%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;text-align:right;">25%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;text-align:right;">0%</div>
+                        </div>
+                        <!-- Bars -->
+                        <div style="flex:1;display:flex;flex-direction:column;gap:0;min-width:0;">
+                          <div style="flex:1;display:flex;align-items:flex-end;gap:3px;min-height:0;">
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;opacity:0.35;border-radius:2px 2px 0 0;height:22%;"></div><div style="flex:1;background:#ffa59a;opacity:0.4;border-radius:2px 2px 0 0;height:6%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;opacity:0.55;border-radius:2px 2px 0 0;height:45%;"></div><div style="flex:1;background:#ffa59a;opacity:0.6;border-radius:2px 2px 0 0;height:14%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;border-radius:2px 2px 0 0;height:71%;"></div><div style="flex:1;background:#ffa59a;opacity:0.75;border-radius:2px 2px 0 0;height:22%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;border-radius:2px 2px 0 0;height:91%;"></div><div style="flex:1;background:#ffa59a;border-radius:2px 2px 0 0;height:30%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;border-radius:2px 2px 0 0;height:84%;"></div><div style="flex:1;background:#ffa59a;border-radius:2px 2px 0 0;height:26%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;border-radius:2px 2px 0 0;height:66%;"></div><div style="flex:1;background:#ffa59a;opacity:0.8;border-radius:2px 2px 0 0;height:16%;"></div></div></div>
+                            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:0;height:100%;"><div style="flex:1;display:flex;align-items:flex-end;gap:1px;width:100%;"><div style="flex:1;background:#4a89f3;opacity:0.5;border-radius:2px 2px 0 0;height:33%;"></div><div style="flex:1;background:#ffa59a;opacity:0.45;border-radius:2px 2px 0 0;height:8%;"></div></div></div>
+                          </div>
+                          <div style="display:flex;gap:3px;padding-top:3px;">
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">8時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">10時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">12時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">14時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">16時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">18時</div>
+                            <div style="flex:1;font-size:6px;color:#94a3b8;text-align:center;">20時</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Peak chips -->
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;">
+                        <div style="background:#f8fbff;border:1px solid #dbeafe;border-radius:7px;padding:6px 8px;">
+                          <div style="font-size:7px;color:#64748b;margin-bottom:1px;">稼働率ピーク</div>
+                          <div style="font-size:14px;font-weight:900;color:#4a89f3;line-height:1.1;">91%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;margin-top:1px;">16時台</div>
+                        </div>
+                        <div style="background:#fff5f4;border:1px solid #fecaca;border-radius:7px;padding:6px 8px;">
+                          <div style="font-size:7px;color:#64748b;margin-bottom:1px;">未回収率ピーク</div>
+                          <div style="font-size:14px;font-weight:900;color:#d63159;line-height:1.1;">30%</div>
+                          <div style="font-size:6.5px;color:#94a3b8;margin-top:1px;">14時台</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 3: AIインサイト (Lundret insights tab) -->
+                  <div style="width:33.333%;flex-shrink:0;height:100%;position:relative;overflow:hidden;font-family:'Manrope','Noto Sans JP',sans-serif;">
+                    <!-- Gradient background matching actual Lundret -->
+                    <div style="position:absolute;inset:0;background:#eef2ff;"></div>
+                    <div style="position:absolute;top:-30%;left:-5%;width:55%;height:80%;border-radius:50%;background:radial-gradient(circle,rgba(74,137,243,0.18) 0%,transparent 70%);"></div>
+                    <div style="position:absolute;bottom:-15%;right:-5%;width:50%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(255,165,154,0.22) 0%,transparent 70%);"></div>
+                    <!-- Layout -->
+                    <div style="position:relative;z-index:1;display:flex;height:100%;overflow:hidden;">
+                      <!-- Nav sidebar -->
+                      <div style="width:100px;background:rgba(255,255,255,0.85);border-right:1px solid rgba(229,231,235,0.6);display:flex;flex-direction:column;flex-shrink:0;padding:10px 0;overflow:hidden;backdrop-filter:blur(8px);">
+                        <div style="padding:0 8px 8px;border-bottom:1px solid #f1f5f9;margin-bottom:4px;">
+                          <span style="font-size:9px;font-weight:900;letter-spacing:0.05em;color:#0f172a;">LUNDR</span><span style="font-size:9px;font-weight:900;color:#4a89f3;">ET</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;padding:0 5px;gap:1px;">
+                          <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">ホーム</span></div>
+                          <div style="padding:4px 6px;border-radius:6px;background:#eff6ff;border:1px solid #bfdbfe;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#4a89f3;flex-shrink:0;"></div><span style="font-size:8px;color:#4a89f3;font-weight:700;">AIインサイト</span></div>
+                          <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">データ</span></div>
+                          <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">ライブ</span></div>
+                          <div style="padding:4px 6px;border-radius:6px;display:flex;align-items:center;gap:5px;"><div style="width:11px;height:11px;border-radius:3px;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:8px;color:#64748b;font-weight:600;">設定</span></div>
+                        </div>
+                      </div>
+                      <!-- Report history panel -->
+                      <div style="width:112px;background:rgba(255,255,255,0.65);border-right:1px solid rgba(229,231,235,0.5);display:flex;flex-direction:column;flex-shrink:0;padding:10px 7px;gap:5px;backdrop-filter:blur(8px);overflow:hidden;">
+                        <div style="font-size:8.5px;font-weight:700;color:#475569;flex-shrink:0;">レポート履歴</div>
+                        <div style="background:rgba(255,255,255,0.85);border-left:3px solid #4a89f3;border-radius:5px;padding:5px 6px;flex-shrink:0;">
+                          <div style="font-size:7.5px;font-weight:700;color:#0f172a;margin-bottom:2px;">今日の分析</div>
+                          <div style="margin-bottom:2px;"><span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:1px 4px;font-size:6.5px;color:#4a89f3;font-weight:700;">最新</span></div>
+                          <div style="font-size:6.5px;color:#94a3b8;">稼働率が上限に...</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.5);border-radius:5px;padding:5px 6px;flex-shrink:0;">
+                          <div style="font-size:7.5px;font-weight:600;color:#475569;margin-bottom:2px;">昨日の分析</div>
+                          <div style="font-size:6.5px;color:#94a3b8;">放置率が上昇...</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.5);border-radius:5px;padding:5px 6px;flex-shrink:0;">
+                          <div style="font-size:7.5px;font-weight:600;color:#475569;margin-bottom:2px;">先週の分析</div>
+                          <div style="font-size:6.5px;color:#94a3b8;">週末の稼働率...</div>
+                        </div>
+                      </div>
+                      <!-- Report card -->
+                      <div style="flex:1;padding:11px;overflow:hidden;min-width:0;">
+                        <div style="background:rgba(255,255,255,0.88);border-radius:11px;box-shadow:0 4px 20px rgba(0,0,0,0.07);height:100%;display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(12px);">
+                          <div style="height:4px;background:linear-gradient(90deg,#4a89f3,#60a5fa,#ffa59a);flex-shrink:0;"></div>
+                          <div style="padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:7px;overflow:hidden;min-height:0;">
+                            <!-- Tags -->
+                            <div>
+                              <div style="display:flex;gap:4px;margin-bottom:4px;">
+                                <span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:1px 5px;font-size:7px;color:#4a89f3;font-weight:700;">問題検出</span>
+                                <span style="background:#fff0ef;border-radius:4px;padding:1px 5px;font-size:7px;color:#d63159;font-weight:700;">高優先</span>
+                              </div>
+                              <div style="font-size:10.5px;font-weight:800;color:#0f172a;line-height:1.35;">ピーク時間帯の稼働率が<br/>限界に達しています</div>
+                              <div style="font-size:6.5px;color:#94a3b8;margin-top:2px;">2025-04-07 09:30</div>
+                            </div>
+                            <!-- Metrics -->
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0;">
+                              <div style="background:rgba(255,255,255,0.7);border:1px solid #f1f5f9;border-radius:6px;padding:5px 7px;"><div style="font-size:6.5px;color:#64748b;margin-bottom:1px;">稼働率ピーク</div><div style="font-size:13px;font-weight:900;color:#d63159;line-height:1.1;">91%</div></div>
+                              <div style="background:rgba(255,255,255,0.7);border:1px solid #f1f5f9;border-radius:6px;padding:5px 7px;"><div style="font-size:6.5px;color:#64748b;margin-bottom:1px;">未回収時間</div><div style="font-size:13px;font-weight:900;color:#d63159;line-height:1.1;">2h</div></div>
+                            </div>
+                            <!-- Insight cards -->
+                            <div style="display:flex;flex-direction:column;gap:5px;flex:1;overflow:hidden;">
+                              <div style="background:rgba(239,246,255,0.85);border:1px solid #bfdbfe;border-radius:7px;padding:6px 8px;flex-shrink:0;">
+                                <div style="font-size:8.5px;font-weight:700;color:#0f172a;margin-bottom:2px;">💡 ダイナミックプライシングを導入</div>
+                                <div style="font-size:7px;color:#475569;line-height:1.4;">土曜14〜16時に+100円設定で月間収益+18%の見込み。需要ピーク時の回転率も向上します。</div>
+                              </div>
+                              <div style="background:rgba(255,255,255,0.65);border:1px solid #f1f5f9;border-radius:7px;padding:6px 8px;flex-shrink:0;">
+                                <div style="font-size:8.5px;font-weight:700;color:#0f172a;margin-bottom:2px;">🔔 放置通知を15分に設定</div>
+                                <div style="font-size:7px;color:#475569;line-height:1.4;">現在の平均放置時間25分→15分通知で回転率改善効果が最大と試算。</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div><!-- /slidesTrack -->
+              </div><!-- /slides viewport -->
+            </div><!-- /browser frame -->
+
+            <!-- Floating LIVE badge -->
+            <div class="absolute -right-4 sm:-right-6 top-8 bg-white rounded-2xl shadow-xl px-3 py-2 flex items-center gap-2 border border-slate-100">
+              <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+              <span class="text-xs font-black text-slate-800">LIVE</span>
+            </div>
+            <!-- Floating stat badge -->
+            <div class="absolute -left-4 sm:-left-6 bottom-14 bg-white rounded-2xl shadow-xl px-3 py-2 border border-slate-100">
+              <p class="text-[10px] font-semibold text-slate-500" id="heroStatLabel">稼働率</p>
+              <p class="text-lg font-black text-brand leading-tight">50<span class="text-sm">%</span></p>
+            </div>
+
+            <!-- Slide indicator dots -->
+            <div class="flex justify-center items-center gap-2 mt-4">
+              <div class="slide-dot rounded-full bg-brand" data-slide-dot style="width:20px;height:6px;border-radius:9999px;"></div>
+              <div class="slide-dot rounded-full bg-white/20" data-slide-dot style="width:6px;height:6px;border-radius:50%;"></div>
+              <div class="slide-dot rounded-full bg-white/20" data-slide-dot style="width:6px;height:6px;border-radius:50%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-40 pointer-events-none">
+        <div class="w-5 h-8 rounded-full border border-white/30 flex items-start justify-center pt-1.5">
+          <div class="w-1 h-2 rounded-full bg-white animate-bounce"></div>
+        </div>
+      </div>
+    </section>
+  </div><!-- /heroScrollWrapper -->
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <!-- Header -->
+      <div class="max-w-2xl mb-16">
+        <p class="text-xs font-black tracking-[0.2em] text-brand uppercase mb-3">FEATURES</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.025em] text-slate-900 mb-4" id="featuresTitle">
+          店舗運営のすべてを、<br />手のひらで。
+        </h2>
+        <p class="text-base text-slate-500 leading-relaxed" id="featuresLead">
+          遠隔監視から売上分析まで。LUNDRETはオーナー様の業務を劇的に効率化します。
+        </p>
+      </div>
+
+      <!-- Feature cards — 4-column on large screens -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Feature 1 -->
+        <div class="feat-card group bg-slate-50 hover:bg-white rounded-2xl p-8 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.964-7.178z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-black text-slate-900 mb-2" id="feature1Title">リアルタイム監視</h3>
+          <p class="text-sm text-slate-500 leading-relaxed" id="feature1Desc">店舗の状況をどこからでも確認。マシンの稼働状況をリアルタイムで把握できます。</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feat-card group bg-slate-50 hover:bg-white rounded-2xl p-8 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-black text-slate-900 mb-2" id="feature2Title">AIインサイト & 価格最適化</h3>
+          <p class="text-sm text-slate-500 leading-relaxed" id="feature2Desc">LLMが稼働データを分析し、根拠付きの改善提案とダイナミックプライシング戦略を自動生成します。</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feat-card group bg-slate-50 hover:bg-white rounded-2xl p-8 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-black text-slate-900 mb-2" id="feature3Title">データの蓄積</h3>
+          <p class="text-sm text-slate-500 leading-relaxed" id="feature3Desc">稼働台数、放置率、売上などのデータを蓄積し、グラフ化します。</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feat-card group bg-slate-50 hover:bg-white rounded-2xl p-8 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-black text-slate-900 mb-2" id="feature4Title">放置アラート</h3>
+          <p class="text-sm text-slate-500 leading-relaxed" id="feature4Desc">ユーザーが設定した時間を超えて洗濯物が放置された場合、LINEでお知らせ。回転率向上と顧客満足度改善に貢献します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="bg-navy py-24 sm:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 hero-grid opacity-50 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-navy via-navy to-navy-2 pointer-events-none"></div>
+    <div class="relative z-10 mx-auto max-w-4xl px-5 sm:px-8 text-center flex flex-col items-center gap-7">
+      <div class="inline-flex items-center gap-2 bg-brand/15 border border-brand/25 rounded-full px-4 py-1.5">
+        <span class="text-xs font-bold tracking-widest text-brand/80 uppercase">FREE BETA</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.025em] text-white" id="ctaTitle">
+        あなたのコインランドリー経営を、<br />次のレベルへ。
+      </h2>
+      <p class="text-base text-white/50 max-w-lg leading-relaxed" id="ctaDesc">無料でAIによる効率化を体験してください。</p>
+      <a href="./contact.html?category=intro" id="ctaBtn"
+        class="inline-flex items-center gap-2 bg-brand hover:bg-blue-500 text-white font-black text-base px-9 py-4 rounded-xl transition-all hover:scale-[1.03] shadow-lg shadow-brand/30">
+        <span id="ctaBtnText">無料で導入</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-navy-2 border-t border-white/5 py-12 px-5 sm:px-8">
+    <div class="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex flex-col items-center sm:items-start gap-1.5">
+        <a href="./index.html" class="flex items-center gap-0">
+          <span class="text-base font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-base font-black tracking-[0.07em] text-brand">ET</span>
+        </a>
+      </div>
+      <nav class="flex flex-wrap items-center justify-center gap-6">
+        <a href="./privacy.html" class="text-sm text-white/40 hover:text-white/80 transition-colors" id="footerPrivacy">プライバシーポリシー</a>
+        <a href="./terms.html" class="text-sm text-white/40 hover:text-white/80 transition-colors" id="footerTerms">利用規約</a>
+        <a href="./contact.html" class="text-sm text-white/40 hover:text-white/80 transition-colors" id="footerContact">お問い合わせ</a>
+        <a href="mailto:contact@lundret.com" class="text-sm text-white/40 hover:text-white/80 transition-colors">contact@lundret.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      // ---- Nav scroll ----
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+      }, { passive: true });
+
+      // ---- Mobile menu ----
+      const menuBtn = document.getElementById('menuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('menuIconOpen');
+      const iconClose = document.getElementById('menuIconClose');
+      let menuOpen = false;
+      menuBtn.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        if (menuOpen) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('open');
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+        } else {
+          mobileMenu.classList.remove('open');
+          mobileMenu.classList.add('hidden');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        }
+      });
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          menuOpen = false;
+          mobileMenu.classList.remove('open');
+          mobileMenu.classList.add('hidden');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+        });
+      });
+
+      // ---- Language ----
+      const translations = {
+        ja: {
+          heroTitle: '稼働率を最大化する<br /><span class="text-brand">AIソリューション</span>',
+          heroSubEn: 'Real-time monitoring &amp; AI Analytics for your laundromat business.',
+          heroSubJa: 'データに基づいた意思決定で、収益を最大化しましょう。',
+          heroStatLabel: '稼働率',
+          heroCta1Text: '無料で導入', heroCta2Text: '活用事例',
+          navCtaText: '無料で導入', mobileCtaText: '無料で導入',
+          navExamples: '活用事例', navContact: 'お問い合わせ', navLogin: 'ログイン',
+          mobileExamples: '活用事例', mobileContactLink: 'お問い合わせ', mobileFeatures: '機能', mobileLogin: 'ログイン',
+          featuresTitle: '店舗運営のすべてを、<br />手のひらで。',
+          featuresLead: '遠隔監視から売上分析まで。LUNDRETはオーナー様の業務を劇的に効率化します。',
+          feature1Title: 'リアルタイム監視', feature1Desc: '店舗の状況をどこからでも確認。マシンの稼働状況をリアルタイムで把握できます。',
+          feature2Title: 'AIインサイト & 価格最適化', feature2Desc: 'LLMが稼働データを分析し、根拠付きの改善提案とダイナミックプライシング戦略を自動生成します。',
+          feature3Title: 'データの蓄積', feature3Desc: '稼働台数、放置率、売上などのデータを蓄積し、グラフ化します。',
+          feature4Title: '放置アラート', feature4Desc: 'ユーザーが設定した時間を超えて洗濯物が放置された場合、LINEでお知らせ。回転率向上と顧客満足度改善に貢献します。',
+          ctaTitle: 'あなたのコインランドリー経営を、<br />次のレベルへ。',
+          ctaDesc: '無料でAIによる効率化を体験してください。',
+          ctaBtnText: '無料で導入',
+          footerPrivacy: 'プライバシーポリシー', footerTerms: '利用規約', footerContact: 'お問い合わせ',
+        },
+        en: {
+          heroTitle: 'Maximize Uptime with<br /><span class="text-brand">AI Solutions</span>',
+          heroSubEn: 'Real-time monitoring &amp; AI Analytics for your laundromat business.',
+          heroSubJa: 'Make data-driven decisions to maximize your revenue.',
+          heroStatLabel: 'Utilization',
+          heroCta1Text: 'Start Free', heroCta2Text: 'Use Cases',
+          navCtaText: 'Start Free', mobileCtaText: 'Start Free',
+          navExamples: 'Use Cases', navContact: 'Contact', navLogin: 'Log In',
+          mobileExamples: 'Use Cases', mobileContactLink: 'Contact', mobileFeatures: 'Features', mobileLogin: 'Log In',
+          featuresTitle: 'Everything for store operations,<br />in your hand.',
+          featuresLead: 'From remote monitoring to sales analysis. LUNDRET dramatically improves owner efficiency.',
+          feature1Title: 'Real-time Monitoring', feature1Desc: 'Check store conditions from anywhere and monitor machine status in real time.',
+          feature2Title: 'AI Insights & Pricing', feature2Desc: 'LLM analyzes your operational data and auto-generates evidence-based improvement insights and dynamic pricing strategies.',
+          feature3Title: 'Data Accumulation', feature3Desc: 'Accumulate operating counts, unattended rates, and sales data, then visualize them in charts.',
+          feature4Title: 'Unattended Alert', feature4Desc: 'When laundry is left unattended beyond your configured threshold, you receive a LINE notification — improving turnover and customer satisfaction.',
+          ctaTitle: 'Take your laundromat business<br />to the next level.',
+          ctaDesc: 'Experience AI-powered efficiency improvements for free.',
+          ctaBtnText: 'Start Free',
+          footerPrivacy: 'Privacy Policy', footerTerms: 'Terms of Service', footerContact: 'Contact',
+        }
+      };
+
+      function setLang(lang) {
+        const d = translations[lang] || translations.ja;
+        document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
+        document.title = lang === 'en'
+          ? 'LUNDRET — AI Laundromat Solutions'
+          : 'LUNDRET — AIでコインランドリー経営をスマートに';
+        Object.entries(d).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (el) el.innerHTML = val;
+        });
+        // Re-sync slide label after lang change
+        if (window.__updateSlideLabel) window.__updateSlideLabel();
+        // Update contact link lang params
+        const cLinks = document.querySelectorAll('a[href*="contact.html"]');
+        cLinks.forEach(a => {
+          try {
+            const u = new URL(a.getAttribute('href'), location.href);
+            if (lang === 'en') u.searchParams.set('lang', 'en');
+            else u.searchParams.delete('lang');
+            a.setAttribute('href', `./${u.pathname.split('/').pop()}${u.search}${u.hash}`);
+          } catch (_) {}
+        });
+        // Toggle button styles
+        const ja = document.getElementById('langBtnJa');
+        const en = document.getElementById('langBtnEn');
+        if (lang === 'en') {
+          en.classList.add('bg-white', 'text-navy'); en.classList.remove('text-white/60');
+          ja.classList.remove('bg-white', 'text-navy'); ja.classList.add('text-white/60');
+        } else {
+          ja.classList.add('bg-white', 'text-navy'); ja.classList.remove('text-white/60');
+          en.classList.remove('bg-white', 'text-navy'); en.classList.add('text-white/60');
+        }
+        try { localStorage.setItem('lundret_lang', lang); } catch (_) {}
+      }
+
+      document.getElementById('langBtnJa').addEventListener('click', () => setLang('ja'));
+      document.getElementById('langBtnEn').addEventListener('click', () => setLang('en'));
+
+      try {
+        const saved = localStorage.getItem('lundret_lang');
+        if (saved === 'en') setLang('en');
+      } catch (_) {}
+
+      // ---- Scrollytelling ----
+      (function() {
+        const wrapper = document.getElementById('heroScrollWrapper');
+        if (!wrapper) return;
+        const track = document.getElementById('slidesTrack');
+        const label = document.getElementById('currentSlideLabel');
+        const dots = document.querySelectorAll('[data-slide-dot]');
+        const slideNames = {
+          ja: ['ホーム', 'データ', 'AIインサイト'],
+          en: ['Home', 'Data', 'AI Insights']
+        };
+        let current = 0;
+
+        function getLang() {
+          try { return localStorage.getItem('lundret_lang') || 'ja'; } catch(_) { return 'ja'; }
+        }
+
+        function goTo(index, force) {
+          if (index === current && !force) return;
+          current = index;
+          if (track) track.style.transform = 'translateX(calc(-' + index + ' * 33.3333%))';
+          dots.forEach(function(dot, i) {
+            if (i === index) {
+              dot.style.width = '20px';
+              dot.style.height = '6px';
+              dot.style.borderRadius = '9999px';
+              dot.style.background = '#2563eb';
+            } else {
+              dot.style.width = '6px';
+              dot.style.height = '6px';
+              dot.style.borderRadius = '50%';
+              dot.style.background = 'rgba(255,255,255,0.2)';
+            }
+          });
+          if (label) {
+            var names = slideNames[getLang()] || slideNames.ja;
+            label.textContent = names[index];
+          }
+        }
+
+        window.__updateSlideLabel = function() {
+          if (label) {
+            var names = slideNames[getLang()] || slideNames.ja;
+            label.textContent = names[current];
           }
         };
 
-        function setToggleState(active, inactive) {
-          if (!active || !inactive) return;
-          active.classList.add('bg-white', 'text-primary', 'shadow-sm', 'ring-1', 'ring-slate-200');
-          active.classList.remove('text-slate-500');
-          inactive.classList.remove('bg-white', 'text-primary', 'shadow-sm', 'ring-1', 'ring-slate-200');
-          inactive.classList.add('text-slate-500');
-        }
-
-        function applyLangToContactLinks(lang) {
-          const links = [landingContactLink, heroContactLink, bottomContactLink, footerContactLink].filter(Boolean);
-          links.forEach((link) => {
-            const rawHref = link.getAttribute('href');
-            if (!rawHref) return;
-            let url;
-            try {
-              url = new URL(rawHref, window.location.href);
-            } catch (_) {
-              return;
-            }
-            if (lang === 'en') {
-              url.searchParams.set('lang', 'en');
-            } else {
-              url.searchParams.delete('lang');
-            }
-            const rel = `${url.pathname.split('/').pop() ? './' + url.pathname.split('/').pop() : rawHref}${url.search}${url.hash}`;
-            link.setAttribute('href', rel);
-          });
-        }
-
-        function applyLanguage(lang) {
-          const dict = translations[lang] || translations.ja;
-          document.documentElement.lang = lang === 'en' ? 'en' : 'ja';
-          document.title = dict.title;
-
-          Object.entries(dict).forEach(([id, value]) => {
-            if (id === 'title') return;
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.innerHTML = value;
-          });
-
-          if (lang === 'en') {
-            setToggleState(langBtnEn, langBtnJa);
-          } else {
-            setToggleState(langBtnJa, langBtnEn);
+        window.addEventListener('scroll', function() {
+          var wTop = wrapper.getBoundingClientRect().top + window.scrollY;
+          var progress = Math.max(0, Math.min(1, (window.scrollY - wTop) / (wrapper.offsetHeight - window.innerHeight)));
+          if (track) track.style.transform = 'translateX(calc(-' + (progress * 66.6666).toFixed(4) + '%))';
+          var idx = progress >= 0.67 ? 2 : progress >= 0.33 ? 1 : 0;
+          if (idx !== current) {
+            current = idx;
+            dots.forEach(function(dot, i) {
+              if (i === idx) { dot.style.width='20px'; dot.style.height='6px'; dot.style.borderRadius='9999px'; dot.style.background='#2563eb'; }
+              else { dot.style.width='6px'; dot.style.height='6px'; dot.style.borderRadius='50%'; dot.style.background='rgba(255,255,255,0.2)'; }
+            });
+            if (label) { var names = slideNames[getLang()] || slideNames.ja; label.textContent = names[idx]; }
           }
-          applyLangToContactLinks(lang);
-
-          try {
-            localStorage.setItem('lundret_lang', lang);
-          } catch (_) { }
-        }
-
-        function clamp01(v) {
-          return Math.max(0, Math.min(1, v));
-        }
-
-        function pageMaxScroll() {
-          return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-        }
-
-        function clampPageTarget() {
-          const max = pageMaxScroll();
-          targetScrollY = Math.max(0, Math.min(max, targetScrollY));
-        }
-
-        function isDesktopViewport() {
-          return window.matchMedia('(min-width: 1024px)').matches;
-        }
-
-        function getPinMetrics() {
-          const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-          if (!isDesktop || !heroPinSection) return { isDesktop: false, scrolledInPin: 0 };
-          const stickyTop = 80;
-          const pinStart = heroPinSection.getBoundingClientRect().top + window.scrollY - stickyTop;
-          return { isDesktop: true, scrolledInPin: Math.max(0, window.scrollY - pinStart) };
-        }
-
-        function syncPreviewImageScroll() {
-          if (!previewViewport || !previewImage) return;
-          const maxImageShift = Math.max(0, previewImage.clientHeight - previewViewport.clientHeight);
-          if (maxImageShift <= 0) {
-            previewImage.style.transform = 'translate3d(0, 0, 0)';
-            return;
-          }
-
-          const pinMetrics = getPinMetrics();
-          if (pinMetrics.isDesktop) {
-            const imageProgress = clamp01(pinMetrics.scrolledInPin / IMAGE_SCROLL_RANGE);
-            previewImage.style.transform = `translate3d(0, ${-Math.round(maxImageShift * imageProgress)}px, 0)`;
-            return;
-          }
-
-          if (!heroPinSection) {
-            previewImage.style.transform = 'translate3d(0, 0, 0)';
-            return;
-          }
-          const sectionTop = heroPinSection.getBoundingClientRect().top + window.scrollY;
-          const mobileStart = Math.max(0, sectionTop - window.innerHeight * 0.25);
-          const ratio = clamp01((window.scrollY - mobileStart) / 420);
-          previewImage.style.transform = `translate3d(0, ${-Math.round(maxImageShift * ratio)}px, 0)`;
-        }
-
-        function syncDeviceSwap() {
-          if (!phoneMock || !imacMock || !deviceSwapStage) return;
-          if (!isDesktopViewport()) {
-            phoneMock.style.transform = 'translate3d(0, -34px, 0) scale(1) rotateY(0deg)';
-            phoneMock.style.opacity = '1';
-            phoneMock.style.visibility = 'visible';
-            phoneMock.style.zIndex = '40';
-            imacMock.style.transform = 'translate3d(15px, -99px, 0) scale(0.8)';
-            imacMock.style.opacity = '0';
-            imacMock.style.zIndex = '20';
-            return;
-          }
-
-          let progress = 0;
-          const pinMetrics = getPinMetrics();
-
-          if (pinMetrics.isDesktop) {
-            progress = clamp01((pinMetrics.scrolledInPin - IMAGE_SCROLL_RANGE) / SWAP_RANGE);
-          } else {
-            const stageTop = deviceSwapStage.getBoundingClientRect().top + window.scrollY;
-            const swapStart = Math.max(0, stageTop - 180);
-            progress = clamp01((window.scrollY - swapStart) / SWAP_RANGE);
-          }
-
-          const phoneX = 120 * progress;
-          const phoneY = -28 * progress;
-          const phoneScale = 1 - 0.28 * progress;
-          const phoneRotate = -16 * progress;
-          phoneMock.style.transform = `translate3d(${phoneX}px, ${phoneY - 34}px, 0) scale(${phoneScale}) rotateY(${phoneRotate}deg)`;
-          phoneMock.style.opacity = String(Math.max(0, 1 - progress * 1.25));
-          phoneMock.style.visibility = progress >= 0.98 ? 'hidden' : 'visible';
-          phoneMock.style.zIndex = progress > 0.55 ? '10' : '40';
-
-          const imacReveal = clamp01((progress - 0.08) / 0.92);
-          const imacY = 72 * (1 - imacReveal);
-          const imacScale = 0.8 + 0.3 * imacReveal;
-          imacMock.style.transform = `translate3d(15px, ${imacY - 171}px, 0) scale(${imacScale})`;
-          imacMock.style.opacity = String(imacReveal);
-          imacMock.style.zIndex = progress > 0.55 ? '50' : '20';
-        }
-
-        function requestFrameSync() {
-          if (syncRaf) return;
-          syncRaf = window.requestAnimationFrame(() => {
-            syncRaf = 0;
-            syncPreviewImageScroll();
-            syncDeviceSwap();
-          });
-        }
-
-        function animateWheelScroll() {
-          const delta = targetScrollY - window.scrollY;
-          if (Math.abs(delta) < 0.5) {
-            window.scrollTo(0, targetScrollY);
-            wheelRaf = 0;
-            requestFrameSync();
-            return;
-          }
-
-          window.scrollTo(0, window.scrollY + delta * SCROLL_EASE);
-          requestFrameSync();
-          wheelRaf = window.requestAnimationFrame(animateWheelScroll);
-        }
-
-        window.addEventListener(
-          'wheel',
-          (event) => {
-            if (!isDesktopViewport()) return;
-            if (event.ctrlKey || event.metaKey) return;
-            const target = event.target instanceof Element ? event.target : null;
-            const editable = target ? target.closest('input, textarea, select, [contenteditable="true"]') : null;
-            if (editable) return;
-
-            event.preventDefault();
-            targetScrollY += event.deltaY * SCROLL_DAMPING;
-            clampPageTarget();
-            if (!wheelRaf) wheelRaf = window.requestAnimationFrame(animateWheelScroll);
-          },
-          { passive: false }
-        );
-
-        window.addEventListener('scroll', requestFrameSync, { passive: true });
-        window.addEventListener('resize', () => {
-          clampPageTarget();
-          requestFrameSync();
-        });
-        if (previewImage) previewImage.addEventListener('load', requestFrameSync);
-        if (phoneMock) phoneMock.style.willChange = 'transform, opacity';
-        if (imacMock) imacMock.style.willChange = 'transform, opacity';
-
-        if (langBtnJa) {
-          langBtnJa.addEventListener('click', () => applyLanguage('ja'));
-        }
-        if (langBtnEn) {
-          langBtnEn.addEventListener('click', () => applyLanguage('en'));
-        }
-        let initialLang = 'ja';
-        try {
-          const savedLang = localStorage.getItem('lundret_lang');
-          if (savedLang === 'en' || savedLang === 'ja') initialLang = savedLang;
-        } catch (_) { }
-        applyLanguage(initialLang);
-
-        requestFrameSync();
+        }, { passive: true });
       })();
+
+      // ---- Star field ----
+      (function() {
+        var sf = document.getElementById('starField');
+        if (!sf) return;
+        for (var i = 0; i < 90; i++) {
+          var s = document.createElement('div');
+          var sz = Math.random() < 0.7 ? 1 : 2;
+          s.style.cssText = 'position:absolute;width:' + sz + 'px;height:' + sz + 'px;border-radius:50%;background:white;' +
+            'left:' + (Math.random() * 100).toFixed(2) + '%;' +
+            'top:' + (Math.random() * 100).toFixed(2) + '%;' +
+            'opacity:' + (Math.random() * 0.35 + 0.1).toFixed(2) + ';pointer-events:none;';
+          sf.appendChild(s);
+        }
+      })();
+
+    })();
   </script>
-
 </body>
-
 </html>

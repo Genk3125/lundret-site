@@ -1,271 +1,365 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>プライバシーポリシー | LUNDRET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-    rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { primary: "#197fe6" },
-          fontFamily: { display: ["Manrope", "Noto Sans JP", "sans-serif"] }
-        }
-      }
+          colors: {
+            brand: "#2563eb",
+            navy: "#060e21",
+            "navy-2": "#0d1a36",
+          },
+          fontFamily: {
+            sans: ["Manrope", "Noto Sans JP", "sans-serif"],
+          },
+        },
+      },
     };
   </script>
+  <style>
+    body { font-family: "Manrope", "Noto Sans JP", sans-serif; }
+    #nav { transition: background 0.3s, box-shadow 0.3s; }
+    #nav.scrolled { background: rgba(6,14,33,0.97) !important; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    #mobileMenu { transition: opacity 0.2s, transform 0.2s; }
+    #mobileMenu.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    #mobileMenu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  </style>
 </head>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<body class="bg-slate-50 text-slate-900 font-display antialiased">
-  <div class="min-h-screen">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
-        <a href="./index.html" class="flex items-center gap-2 text-slate-900 hover:text-primary transition-colors">
-          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
-          <span class="text-sm font-bold" id="privacyBackText">トップへ戻る</span>
+  <!-- NAV -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 bg-navy/95 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between h-16">
+      <a href="./index.html" class="flex items-center gap-0 select-none">
+        <span class="text-xl font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-xl font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[10px] font-bold tracking-widest text-white/40 align-middle">(BETA)</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="./index.html#features" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navFeatures">機能</a>
+        <a href="./examples.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navExamples">活用事例</a>
+        <a href="./contact.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navContact">お問い合わせ</a>
+        <a href="https://app.lundret.com" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center bg-white/10 rounded-full p-0.5 border border-white/10">
+          <button id="langBtnJa" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-white text-navy transition-all">JP</button>
+          <button id="langBtnEn" class="px-2.5 py-1 text-[11px] font-bold rounded-full text-white/60 hover:text-white transition-all">EN</button>
+        </div>
+        <a href="./contact.html?category=intro" id="navCta"
+          class="hidden sm:inline-flex items-center gap-1.5 bg-brand hover:bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">
+          <span id="navCtaText">無料で導入</span>
         </a>
-        <h1 class="text-base sm:text-lg font-black tracking-[0.06em]">
-          <span class="text-[#0f172a]">LUNDR</span><span class="text-[#2f6fdd]">ET</span><span
-            class="ml-2 align-middle text-[11px] font-bold tracking-[0.12em] text-slate-400">(BETA)</span>
-        </h1>
+        <button id="menuBtn" class="md:hidden p-2 text-white/70 hover:text-white" aria-label="メニュー">
+          <svg id="menuIconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menuIconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-    </header>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-navy-2 border-t border-white/5 px-5 py-4 flex flex-col gap-1">
+      <a href="./index.html#features" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileFeatures">機能</a>
+      <a href="./examples.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileExamples">活用事例</a>
+      <a href="./contact.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileContactLink">お問い合わせ</a>
+      <a href="https://app.lundret.com" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
+      <a href="./contact.html?category=intro" id="mobileCtaBtn"
+        class="mt-2 flex items-center justify-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2.5 rounded-lg transition-colors hover:bg-blue-500">
+        <span id="mobileCtaText">無料で導入</span>
+      </a>
+    </div>
+  </nav>
 
-    <main class="px-4 py-10 sm:px-6 sm:py-14">
-      <div class="mx-auto max-w-3xl">
-        <div class="mb-8">
-          <p class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
-            PRIVACY POLICY</p>
-          <h2 class="mt-4 text-3xl font-black leading-tight tracking-[-0.02em] sm:text-4xl" id="privacyPageTitle">
-            プライバシーポリシー</h2>
-          <p class="mt-3 text-sm text-slate-500" id="privacyPageDates">制定日：2026/2/22　最終更新：2026/2/22</p>
-        </div>
-
-        <div class="space-y-6" id="privacySections">
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">1</span>
-              事業者情報
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              我々はLUNDRETサービス（以下「本サービス」）を運営するにあたり、お客様の個人情報を以下の方針に基づいて取り扱います。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">2</span>
-              取得する情報と利用目的
-            </h3>
-            <div class="space-y-3 text-sm leading-relaxed text-slate-600">
-              <p>当社は、以下の情報をお問い合わせフォームを通じて取得します。</p>
-              <ul class="ml-4 list-disc space-y-1 text-slate-600">
-                <li>氏名・会社名／店舗名</li>
-                <li>メールアドレス・電話番号</li>
-                <li>お問い合わせ内容</li>
-              </ul>
-              <p class="pt-1">これらの情報は、お問い合わせへの回答および本サービスに関するご案内のみに利用します。それ以外の目的には利用しません。</p>
-            </div>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">3</span>
-              第三者提供
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              法令に基づく場合を除き、お客様の同意なく個人情報を第三者に提供することはありません。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">4</span>
-              情報の管理・保存期間
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              取得した個人情報は、適切なアクセス制御のもと安全に管理します。お問い合わせ対応の完了後、必要がなくなり次第速やかに削除します。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">5</span>
-              開示・訂正・削除
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              お客様ご自身の個人情報について、開示・訂正・削除を希望される場合は、下記お問い合わせ窓口までご連絡ください。ご本人確認のうえ、速やかに対応いたします。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">6</span>
-              外部API・AI分析連携
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本サービスでは、サービス提供および分析機能の提供のため、APIを通じてAIサービスに店舗運営データ（例：回転率、稼働率、売上情報など）を送信する場合があります。送信する情報は、分析および提案機能の提供に必要な範囲に限定し、適切に管理します。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">7</span>
-              ポリシーの変更
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本ポリシーは、法令の改正や運用方針の変更に応じて予告なく改定することがあります。最新版は本ページにて随時公開します。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">8</span>
-              お問い合わせ窓口
-            </h3>
-            <div class="space-y-1 text-sm leading-relaxed text-slate-600">
-              <p>近藤元樹</p>
-              <p>メール：<a href="mailto:contact@lundret.com"
-                  class="text-primary hover:underline">contact@lundret.com</a></p>
-            </div>
-          </div>
-        </div>
-
-        <p class="mt-8 text-center text-xs text-slate-400" id="privacyFooterCopyright">
-          本サイトに掲載されているコンテンツの著作権は、近藤元樹または各権利者に帰属します。</p>
-      </div>
-    </main>
+  <!-- PAGE HEADER -->
+  <div class="bg-navy pt-16">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-12 sm:py-16">
+      <p class="text-xs font-bold tracking-[0.18em] text-brand/80 uppercase mb-3">PRIVACY POLICY</p>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-[-0.02em] text-white" id="privacyPageTitle">プライバシーポリシー</h1>
+      <p class="mt-3 text-sm text-white/50" id="privacyPageDates">制定日：2026/2/22　最終更新：2026/2/22</p>
+    </div>
   </div>
-  <script>
-    (() => {
-      let lang = 'ja';
-      try {
-        lang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja';
-      } catch (_) { }
-      if (lang !== 'en') return;
 
-      document.documentElement.lang = 'en';
-      document.title = 'Privacy Policy | LUNDRET';
+  <!-- CONTENT -->
+  <main class="bg-slate-50 px-5 sm:px-8 py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl">
+      <div class="space-y-4" id="privacySections">
 
-      const setText = (id, value) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-      };
-
-      setText('privacyBackText', 'Back to Top');
-      setText('privacyPageTitle', 'Privacy Policy');
-      setText('privacyPageDates', 'Effective Date: 2026/2/22  Last Updated: 2026/2/22');
-      setText('privacyFooterCopyright', 'Copyright to the content published on this site belongs to Genki Kondo or the respective rights holders.');
-
-      const sections = document.getElementById('privacySections');
-      if (!sections) return;
-      sections.innerHTML = `
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">1</span>
-            Operator Information
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">1</span>
+            事業者情報
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            We handle customers' personal information in accordance with the following policy in operating the LUNDRET service (the "Service").
+            我々はLUNDRETサービス（以下「本サービス」）を運営するにあたり、お客様の個人情報を以下の方針に基づいて取り扱います。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">2</span>
-            Information Collected and Purpose of Use
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">2</span>
+            取得する情報と利用目的
           </h3>
           <div class="space-y-3 text-sm leading-relaxed text-slate-600">
-            <p>We collect the following information through the contact form:</p>
+            <p>当社は、以下の情報をお問い合わせフォームを通じて取得します。</p>
             <ul class="ml-4 list-disc space-y-1 text-slate-600">
-              <li>Name / Company name / Store name</li>
-              <li>Email address / Phone number</li>
-              <li>Inquiry details</li>
+              <li>氏名・会社名／店舗名</li>
+              <li>メールアドレス・電話番号</li>
+              <li>お問い合わせ内容</li>
             </ul>
-            <p class="pt-1">This information is used only to respond to inquiries and provide information related to the Service. We do not use it for other purposes.</p>
+            <p class="pt-1">これらの情報は、お問い合わせへの回答および本サービスに関するご案内のみに利用します。それ以外の目的には利用しません。</p>
           </div>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">3</span>
-            Provision to Third Parties
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">3</span>
+            第三者提供
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            Except as required by law, we do not provide personal information to third parties without the customer's consent.
+            法令に基づく場合を除き、お客様の同意なく個人情報を第三者に提供することはありません。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">4</span>
-            Management of Information and Retention Period
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">4</span>
+            情報の管理・保存期間
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            Collected personal information is securely managed under appropriate access controls. After inquiry handling is completed, information will be deleted promptly when no longer necessary.
+            取得した個人情報は、適切なアクセス制御のもと安全に管理します。お問い合わせ対応の完了後、必要がなくなり次第速やかに削除します。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">5</span>
-            Disclosure, Correction, and Deletion
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">5</span>
+            開示・訂正・削除
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            If you wish to request disclosure, correction, or deletion of your personal information, please contact the inquiry desk below. We will respond promptly after confirming your identity.
+            お客様ご自身の個人情報について、開示・訂正・削除を希望される場合は、下記お問い合わせ窓口までご連絡ください。ご本人確認のうえ、速やかに対応いたします。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">6</span>
-            External API and AI Analysis Integration
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">6</span>
+            外部API・AI分析連携
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            To provide the Service and its analysis features, we may send store operation data (for example: turnover rate, utilization rate, and sales information) to AI services through APIs. The information sent is limited to the scope necessary to provide analysis and recommendation features and is managed appropriately.
+            本サービスでは、サービス提供および分析機能の提供のため、APIを通じてAIサービスに店舗運営データ（例：回転率、稼働率、売上情報など）を送信する場合があります。送信する情報は、分析および提案機能の提供に必要な範囲に限定し、適切に管理します。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">7</span>
-            Changes to This Policy
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">7</span>
+            ポリシーの変更
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            This policy may be revised without prior notice in response to legal amendments or changes in operational policy. The latest version will be posted on this page.
+            本ポリシーは、法令の改正や運用方針の変更に応じて予告なく改定することがあります。最新版は本ページにて随時公開します。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="mb-3 flex items-center gap-2 text-base font-black text-slate-800">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">8</span>
-            Contact Desk
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">8</span>
+            お問い合わせ窓口
           </h3>
           <div class="space-y-1 text-sm leading-relaxed text-slate-600">
-            <p>Genki Kondo</p>
-            <p>Email: <a href="mailto:contact@lundret.com" class="text-primary hover:underline">contact@lundret.com</a></p>
+            <p id="privacyContactName">近藤元樹</p>
+            <p>メール：<a href="mailto:contact@lundret.com" class="text-brand hover:underline">contact@lundret.com</a></p>
           </div>
         </div>
-      `;
-    })();
+
+      </div>
+
+      <p class="mt-8 text-center text-xs text-slate-400" id="privacyFooterCopyright">
+        本サイトに掲載されているコンテンツの著作権は、近藤元樹または各権利者に帰属します。
+      </p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t border-white/5">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-0">
+        <span class="text-base font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-base font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[9px] font-bold tracking-widest text-white/30">(BETA)</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <a href="./privacy.html" class="text-xs text-white/70 transition-colors" id="footerPrivacy">プライバシーポリシー</a>
+        <a href="./terms.html" class="text-xs text-white/40 hover:text-white/70 transition-colors" id="footerTerms">利用規約</a>
+        <a href="mailto:contact@lundret.com" class="text-xs text-white/40 hover:text-white/70 transition-colors">contact@lundret.com</a>
+      </div>
+      <p class="text-xs text-white/30" id="footerCopyright">© 2026 近藤元樹</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const navEl = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIconOpen = document.getElementById('menuIconOpen');
+    const menuIconClose = document.getElementById('menuIconClose');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      mobileMenu.classList.toggle('open', !isOpen);
+      menuIconOpen.classList.toggle('hidden', !isOpen);
+      menuIconClose.classList.toggle('hidden', isOpen);
+    });
+
+    const jaTexts = {
+      title: 'プライバシーポリシー | LUNDRET',
+      navFeatures: '機能', navExamples: '活用事例', navContact: 'お問い合わせ', navLogin: 'ログイン', mobileLogin: 'ログイン',
+      navCtaText: '無料で導入',
+      privacyPageTitle: 'プライバシーポリシー',
+      privacyPageDates: '制定日：2026/2/22　最終更新：2026/2/22',
+      privacyContactName: '近藤元樹',
+      privacyFooterCopyright: '本サイトに掲載されているコンテンツの著作権は、近藤元樹または各権利者に帰属します。',
+      footerPrivacy: 'プライバシーポリシー', footerTerms: '利用規約',
+      footerCopyright: '© 2026 近藤元樹',
+    };
+
+    const enTexts = {
+      title: 'Privacy Policy | LUNDRET',
+      navFeatures: 'Features', navExamples: 'Use Cases', navContact: 'Contact', navLogin: 'Log In', mobileLogin: 'Log In',
+      navCtaText: 'Get Started',
+      privacyPageTitle: 'Privacy Policy',
+      privacyPageDates: 'Effective Date: 2026/2/22  Last Updated: 2026/2/22',
+      privacyContactName: 'Genki Kondo',
+      privacyFooterCopyright: 'Copyright to the content published on this site belongs to Genki Kondo or the respective rights holders.',
+      footerPrivacy: 'Privacy Policy', footerTerms: 'Terms of Service',
+      footerCopyright: '© 2026 Genki Kondo',
+    };
+
+    const enSections = `
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">1</span>
+          Operator Information
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">We handle customers' personal information in accordance with the following policy in operating the LUNDRET service (the "Service").</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">2</span>
+          Information Collected and Purpose of Use
+        </h3>
+        <div class="space-y-3 text-sm leading-relaxed text-slate-600">
+          <p>We collect the following information through the contact form:</p>
+          <ul class="ml-4 list-disc space-y-1"><li>Name / Company name / Store name</li><li>Email address / Phone number</li><li>Inquiry details</li></ul>
+          <p class="pt-1">This information is used only to respond to inquiries and provide information related to the Service. We do not use it for other purposes.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">3</span>
+          Provision to Third Parties
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">Except as required by law, we do not provide personal information to third parties without the customer's consent.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">4</span>
+          Management of Information and Retention Period
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">Collected personal information is securely managed under appropriate access controls. After inquiry handling is completed, information will be deleted promptly when no longer necessary.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">5</span>
+          Disclosure, Correction, and Deletion
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">If you wish to request disclosure, correction, or deletion of your personal information, please contact the inquiry desk below. We will respond promptly after confirming your identity.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">6</span>
+          External API and AI Analysis Integration
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">To provide the Service and its analysis features, we may send store operation data (e.g. turnover rate, utilization rate, sales information) to AI services through APIs. The information sent is limited to the scope necessary to provide analysis and recommendation features and is managed appropriately.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">7</span>
+          Changes to This Policy
+        </h3>
+        <p class="text-sm leading-relaxed text-slate-600">This policy may be revised without prior notice in response to legal amendments or changes in operational policy. The latest version will be posted on this page.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">8</span>
+          Contact Desk
+        </h3>
+        <div class="space-y-1 text-sm leading-relaxed text-slate-600">
+          <p id="privacyContactName">Genki Kondo</p>
+          <p>Email: <a href="mailto:contact@lundret.com" class="text-brand hover:underline">contact@lundret.com</a></p>
+        </div>
+      </div>
+    `;
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function applyLanguage(lang) {
+      const t = lang === 'en' ? enTexts : jaTexts;
+      document.documentElement.lang = lang;
+      document.title = t.title;
+      setText('navFeatures', t.navFeatures);
+      setText('navExamples', t.navExamples);
+      setText('navContact', t.navContact);
+      setText('navLogin', t.navLogin);
+      setText('mobileLogin', t.mobileLogin);
+      setText('navCtaText', t.navCtaText);
+      setText('privacyPageTitle', t.privacyPageTitle);
+      setText('privacyPageDates', t.privacyPageDates);
+      setText('privacyFooterCopyright', t.privacyFooterCopyright);
+      setText('footerPrivacy', t.footerPrivacy);
+      setText('footerTerms', t.footerTerms);
+      setText('footerCopyright', t.footerCopyright);
+      if (lang === 'en') {
+        const sections = document.getElementById('privacySections');
+        if (sections) sections.innerHTML = enSections;
+      }
+    }
+
+    let currentLang = 'ja';
+    try { currentLang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja'; } catch (_) {}
+    applyLanguage(currentLang);
+
+    // Lang buttons
+    function setActiveLang(lang) {
+      const jaBtn = document.getElementById('langBtnJa');
+      const enBtn = document.getElementById('langBtnEn');
+      jaBtn.className = `px-2.5 py-1 text-[11px] font-bold rounded-full transition-all ${lang === 'ja' ? 'bg-white text-navy' : 'text-white/60 hover:text-white'}`;
+      enBtn.className = `px-2.5 py-1 text-[11px] font-bold rounded-full transition-all ${lang === 'en' ? 'bg-white text-navy' : 'text-white/60 hover:text-white'}`;
+    }
+    setActiveLang(currentLang);
+
+    document.getElementById('langBtnJa').addEventListener('click', () => {
+      currentLang = 'ja';
+      try { localStorage.setItem('lundret_lang', 'ja'); } catch (_) {}
+      applyLanguage('ja'); setActiveLang('ja');
+    });
+    document.getElementById('langBtnEn').addEventListener('click', () => {
+      currentLang = 'en';
+      try { localStorage.setItem('lundret_lang', 'en'); } catch (_) {}
+      applyLanguage('en'); setActiveLang('en');
+    });
   </script>
 </body>
-
 </html>

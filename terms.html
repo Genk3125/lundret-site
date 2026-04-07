@@ -1,273 +1,310 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>利用規約 | LUNDRET</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
-    rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { primary: "#197fe6" },
-          fontFamily: { display: ["Manrope", "Noto Sans JP", "sans-serif"] }
-        }
-      }
+          colors: {
+            brand: "#2563eb",
+            navy: "#060e21",
+            "navy-2": "#0d1a36",
+          },
+          fontFamily: {
+            sans: ["Manrope", "Noto Sans JP", "sans-serif"],
+          },
+        },
+      },
     };
   </script>
+  <style>
+    body { font-family: "Manrope", "Noto Sans JP", sans-serif; }
+    #nav { transition: background 0.3s, box-shadow 0.3s; }
+    #nav.scrolled { background: rgba(6,14,33,0.97) !important; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    #mobileMenu { transition: opacity 0.2s, transform 0.2s; }
+    #mobileMenu.hidden { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    #mobileMenu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  </style>
 </head>
+<body class="bg-slate-50 text-slate-900 antialiased">
 
-<body class="bg-slate-50 text-slate-900 font-display antialiased">
-  <div class="min-h-screen">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-      <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
-        <a href="./index.html" class="flex items-center gap-2 text-slate-900 hover:text-primary transition-colors">
-          <span class="material-symbols-outlined text-[20px]">arrow_back</span>
-          <span class="text-sm font-bold" id="termsBackText">トップへ戻る</span>
+  <!-- NAV -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 bg-navy/95 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 flex items-center justify-between h-16">
+      <a href="./index.html" class="flex items-center gap-0 select-none">
+        <span class="text-xl font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-xl font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[10px] font-bold tracking-widest text-white/40 align-middle">(BETA)</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="./index.html#features" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navFeatures">機能</a>
+        <a href="./examples.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navExamples">活用事例</a>
+        <a href="./contact.html" class="text-sm font-semibold text-white/70 hover:text-white transition-colors" id="navContact">お問い合わせ</a>
+        <a href="https://app.lundret.com" class="text-sm font-bold text-white hover:text-brand transition-colors" id="navLogin">ログイン</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center bg-white/10 rounded-full p-0.5 border border-white/10">
+          <button id="langBtnJa" class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-white text-navy transition-all">JP</button>
+          <button id="langBtnEn" class="px-2.5 py-1 text-[11px] font-bold rounded-full text-white/60 hover:text-white transition-all">EN</button>
+        </div>
+        <a href="./contact.html?category=intro" id="navCta"
+          class="hidden sm:inline-flex items-center gap-1.5 bg-brand hover:bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">
+          <span id="navCtaText">無料で導入</span>
         </a>
-        <h1 class="text-base sm:text-lg font-black tracking-[0.06em]">
-          <span class="text-[#0f172a]">LUNDR</span><span class="text-[#2f6fdd]">ET</span><span
-            class="ml-2 align-middle text-[11px] font-bold tracking-[0.12em] text-slate-400">(BETA)</span>
-        </h1>
+        <button id="menuBtn" class="md:hidden p-2 text-white/70 hover:text-white" aria-label="メニュー">
+          <svg id="menuIconOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg id="menuIconClose" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-    </header>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-navy-2 border-t border-white/5 px-5 py-4 flex flex-col gap-1">
+      <a href="./index.html#features" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileFeatures">機能</a>
+      <a href="./examples.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileExamples">活用事例</a>
+      <a href="./contact.html" class="py-2.5 text-sm font-semibold text-white/70 hover:text-white transition-colors" id="mobileContactLink">お問い合わせ</a>
+      <a href="https://app.lundret.com" class="py-2.5 text-sm font-bold text-white hover:text-brand transition-colors" id="mobileLogin">ログイン</a>
+      <a href="./contact.html?category=intro"
+        class="mt-2 flex items-center justify-center gap-2 bg-brand text-white text-sm font-bold px-4 py-2.5 rounded-lg transition-colors hover:bg-blue-500">
+        <span id="mobileCtaText">無料で導入</span>
+      </a>
+    </div>
+  </nav>
 
-    <main class="px-4 py-10 sm:px-6 sm:py-14">
-      <div class="mx-auto max-w-3xl">
-        <div class="mb-8">
-          <p class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">TERMS
-            OF SERVICE</p>
-          <h2 class="mt-4 text-3xl font-black leading-tight tracking-[-0.02em] sm:text-4xl" id="termsPageTitle">利用規約
-          </h2>
-          <p class="mt-3 text-sm text-slate-500" id="termsPageDates">制定日：2026/2/22　最終更新：2026/2/22</p>
-          <p class="mt-3 text-sm leading-relaxed text-slate-600" id="termsLeadText">
-            本規約は、近藤元樹（以下「運営者」）が提供するLUNDRETサービス（以下「本サービス」）の利用条件を定めるものです。ユーザーは、本サービスを利用することにより、本規約に同意したものとみなされます。</p>
-        </div>
-
-        <div class="space-y-6" id="termsSections">
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">1</span>
-              サービスの内容
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本サービスは、コインランドリー店舗運営に関する情報の可視化、分析、およびAIによる提案機能等を提供するものです。運営者は、必要に応じて本サービスの内容を変更、追加、または停止することができます。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">2</span>
-              利用登録
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本サービスの利用にあたり、運営者が定める方法による登録または申込み手続きが必要となる場合があります。登録情報に虚偽、誤記、または重要な記載漏れがあった場合、運営者は利用停止または登録抹消等の措置を行うことができます。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">3</span>
-              禁止事項
-            </h3>
-            <div class="text-sm leading-relaxed text-slate-600">
-              <p class="mb-2">ユーザーは以下の行為を行ってはなりません。</p>
-              <ul class="ml-4 space-y-1 list-disc">
-                <li>法令または公序良俗に反する行為</li>
-                <li>運営者または第三者の知的財産権・プライバシーを侵害する行為</li>
-                <li>本サービスのシステムに不正にアクセスする行為</li>
-                <li>本サービスの運営を妨害する行為</li>
-                <li>その他、運営者が不適切と判断する行為</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">4</span>
-              知的財産権
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本サービスに関するコンテンツ、デザイン、ソフトウェア等に関する著作権その他の知的財産権は、運営者または正当な権利者に帰属します。これらを無断で複製、転載、改変、再配布、その他二次利用することを禁じます。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">5</span>
-              免責事項
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              運営者は、本サービスの完全性、正確性、継続性、特定目的適合性を保証するものではありません。特に、本サービス上で表示・提供される店舗運営データ、分析結果、AIによる分析内容および提案内容等については、誤りを含む可能性があり、実際の状況と一致しない場合があります。本サービスの利用または利用不能に起因してユーザーに生じた損害について、運営者の故意または重大な過失がある場合を除き、運営者は責任を負いません。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">6</span>
-              サービスの停止・終了
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              運営者は、システムメンテナンス、障害、通信回線の不具合、外部サービスの停止、その他の事由により、予告なく本サービスの全部または一部を一時停止または終了することができます。これによりユーザーに生じた損害について、運営者の故意または重大な過失がある場合を除き、運営者は責任を負いません。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">7</span>
-              規約の変更
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              運営者は、必要と判断した場合、本規約を変更することができます。変更後の規約は、本ページへの掲載その他運営者が適切と判断する方法で周知した時点から効力を生じるものとし、その後ユーザーが本サービスを利用した場合、変更後の規約に同意したものとみなします。
-            </p>
-          </div>
-
-          <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-            <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">8</span>
-              準拠法
-            </h3>
-            <p class="text-sm leading-relaxed text-slate-600">
-              本規約は日本法に準拠します。
-            </p>
-          </div>
-        </div>
-
-        <p class="mt-8 text-center text-xs text-slate-400" id="termsFooterCopyright">
-          本サイトに掲載されているコンテンツの著作権は、近藤元樹または各権利者に帰属します。</p>
-      </div>
-    </main>
+  <!-- PAGE HEADER -->
+  <div class="bg-navy pt-16">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-12 sm:py-16">
+      <p class="text-xs font-bold tracking-[0.18em] text-brand/80 uppercase mb-3">TERMS OF SERVICE</p>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-[-0.02em] text-white" id="termsPageTitle">利用規約</h1>
+      <p class="mt-3 text-sm text-white/50" id="termsPageDates">制定日：2026/2/22　最終更新：2026/2/22</p>
+      <p class="mt-4 text-sm leading-relaxed text-white/60" id="termsLeadText">
+        本規約は、近藤元樹（以下「運営者」）が提供するLUNDRETサービス（以下「本サービス」）の利用条件を定めるものです。ユーザーは、本サービスを利用することにより、本規約に同意したものとみなされます。
+      </p>
+    </div>
   </div>
-  <script>
-    (() => {
-      let lang = 'ja';
-      try {
-        lang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja';
-      } catch (_) { }
-      if (lang !== 'en') return;
 
-      document.documentElement.lang = 'en';
-      document.title = 'Terms of Service | LUNDRET';
+  <!-- CONTENT -->
+  <main class="bg-slate-50 px-5 sm:px-8 py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl">
+      <div class="space-y-4" id="termsSections">
 
-      const setText = (id, value) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-      };
-
-      setText('termsBackText', 'Back to Top');
-      setText('termsPageTitle', 'Terms of Service');
-      setText('termsPageDates', 'Effective Date: 2026/2/22  Last Updated: 2026/2/22');
-      setText('termsLeadText', 'These Terms of Service define the conditions for using the LUNDRET service (the "Service") provided by Genki Kondo (the "Operator"). By using the Service, users are deemed to have agreed to these Terms.');
-      setText('termsFooterCopyright', 'Copyright to the content published on this site belongs to Genki Kondo or the respective rights holders.');
-
-      const sections = document.getElementById('termsSections');
-      if (!sections) return;
-      sections.innerHTML = `
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">1</span>
-            Description of the Service
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">1</span>
+            サービスの内容
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            The Service provides features such as visualization of laundromat store operation information, analysis, and AI-based recommendations. The Operator may change, add, suspend, or discontinue the Service at any time as necessary.
+            本サービスは、コインランドリー店舗運営に関する情報の可視化、分析、およびAIによる提案機能等を提供するものです。運営者は、必要に応じて本サービスの内容を変更、追加、または停止することができます。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">2</span>
-            Registration
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">2</span>
+            利用登録
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            Use of the Service may require registration or an application process in a manner specified by the Operator. If registered information contains false statements, errors, or material omissions, the Operator may suspend use of the Service or cancel registration.
+            本サービスの利用にあたり、運営者が定める方法による登録または申込み手続きが必要となる場合があります。登録情報に虚偽、誤記、または重要な記載漏れがあった場合、運営者は利用停止または登録抹消等の措置を行うことができます。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">3</span>
-            Prohibited Conduct
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">3</span>
+            禁止事項
           </h3>
           <div class="text-sm leading-relaxed text-slate-600">
-            <p class="mb-2">Users must not engage in the following acts:</p>
+            <p class="mb-2">ユーザーは以下の行為を行ってはなりません。</p>
             <ul class="ml-4 space-y-1 list-disc">
-              <li>Acts that violate laws or public order and morals</li>
-              <li>Acts that infringe intellectual property rights or privacy of the Operator or third parties</li>
-              <li>Unauthorized access to the Service's systems</li>
-              <li>Acts that interfere with the operation of the Service</li>
-              <li>Any other act deemed inappropriate by the Operator</li>
+              <li>法令または公序良俗に反する行為</li>
+              <li>運営者または第三者の知的財産権・プライバシーを侵害する行為</li>
+              <li>本サービスのシステムに不正にアクセスする行為</li>
+              <li>本サービスの運営を妨害する行為</li>
+              <li>その他、運営者が不適切と判断する行為</li>
             </ul>
           </div>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">4</span>
-            Intellectual Property Rights
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">4</span>
+            知的財産権
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            Copyrights and other intellectual property rights related to the Service, including its content, design, and software, belong to the Operator or legitimate rights holders. Unauthorized reproduction, publication, modification, redistribution, or other secondary use is prohibited.
+            本サービスに関するコンテンツ、デザイン、ソフトウェア等に関する著作権その他の知的財産権は、運営者または正当な権利者に帰属します。これらを無断で複製、転載、改変、再配布、その他二次利用することを禁じます。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">5</span>
-            Disclaimer
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">5</span>
+            免責事項
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            The Operator does not guarantee the completeness, accuracy, continuity, or fitness for a particular purpose of the Service. In particular, store operation data, analysis results, and AI-generated analyses and recommendations displayed or provided through the Service may contain errors and may not match actual conditions. The Operator shall not be liable for damages incurred by users due to the use or inability to use the Service, except in cases of willful misconduct or gross negligence by the Operator.
+            運営者は、本サービスの完全性、正確性、継続性、特定目的適合性を保証するものではありません。特に、本サービス上で表示・提供される店舗運営データ、分析結果、AIによる分析内容および提案内容等については、誤りを含む可能性があり、実際の状況と一致しない場合があります。本サービスの利用または利用不能に起因してユーザーに生じた損害について、運営者の故意または重大な過失がある場合を除き、運営者は責任を負いません。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">6</span>
-            Suspension or Termination of the Service
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">6</span>
+            サービスの停止・終了
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            The Operator may suspend or terminate all or part of the Service without prior notice due to system maintenance, failures, communication issues, suspension of external services, or other reasons. The Operator shall not be liable for damages incurred by users as a result, except in cases of willful misconduct or gross negligence by the Operator.
+            運営者は、システムメンテナンス、障害、通信回線の不具合、外部サービスの停止、その他の事由により、予告なく本サービスの全部または一部を一時停止または終了することができます。これによりユーザーに生じた損害について、運営者の故意または重大な過失がある場合を除き、運営者は責任を負いません。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">7</span>
-            Changes to the Terms
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">7</span>
+            規約の変更
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            The Operator may amend these Terms when deemed necessary. Revised Terms become effective when posted on this page or otherwise notified by a method deemed appropriate by the Operator. Continued use of the Service after such changes constitutes agreement to the revised Terms.
+            運営者は、必要と判断した場合、本規約を変更することができます。変更後の規約は、本ページへの掲載その他運営者が適切と判断する方法で周知した時点から効力を生じるものとし、その後ユーザーが本サービスを利用した場合、変更後の規約に同意したものとみなします。
           </p>
         </div>
 
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
-          <h3 class="flex items-center gap-2 text-base font-black text-slate-800 mb-3">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-black text-white">8</span>
-            Governing Law
+        <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+          <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">8</span>
+            準拠法
           </h3>
           <p class="text-sm leading-relaxed text-slate-600">
-            These Terms shall be governed by the laws of Japan.
+            本規約は日本法に準拠します。
           </p>
         </div>
-      `;
-    })();
+
+      </div>
+
+      <p class="mt-8 text-center text-xs text-slate-400" id="termsFooterCopyright">
+        本サイトに掲載されているコンテンツの著作権は、近藤元樹または各権利者に帰属します。
+      </p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy border-t border-white/5">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-0">
+        <span class="text-base font-black tracking-[0.07em] text-white">LUNDR</span><span class="text-base font-black tracking-[0.07em] text-brand">ET</span>
+        <span class="ml-2 text-[9px] font-bold tracking-widest text-white/30">(BETA)</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <a href="./privacy.html" class="text-xs text-white/40 hover:text-white/70 transition-colors" id="footerPrivacy">プライバシーポリシー</a>
+        <a href="./terms.html" class="text-xs text-white/70 transition-colors" id="footerTerms">利用規約</a>
+        <a href="mailto:contact@lundret.com" class="text-xs text-white/40 hover:text-white/70 transition-colors">contact@lundret.com</a>
+      </div>
+      <p class="text-xs text-white/30" id="footerCopyright">© 2026 近藤元樹</p>
+    </div>
+  </footer>
+
+  <script>
+    const navEl = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIconOpen = document.getElementById('menuIconOpen');
+    const menuIconClose = document.getElementById('menuIconClose');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      mobileMenu.classList.toggle('open', !isOpen);
+      menuIconOpen.classList.toggle('hidden', !isOpen);
+      menuIconClose.classList.toggle('hidden', isOpen);
+    });
+
+    const enSections = `
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">1</span>Description of the Service</h3>
+        <p class="text-sm leading-relaxed text-slate-600">The Service provides features such as visualization of laundromat store operation information, analysis, and AI-based recommendations. The Operator may change, add, suspend, or discontinue the Service at any time as necessary.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">2</span>Registration</h3>
+        <p class="text-sm leading-relaxed text-slate-600">Use of the Service may require registration or an application process in a manner specified by the Operator. If registered information contains false statements, errors, or material omissions, the Operator may suspend use of the Service or cancel registration.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">3</span>Prohibited Conduct</h3>
+        <div class="text-sm leading-relaxed text-slate-600"><p class="mb-2">Users must not engage in the following acts:</p><ul class="ml-4 space-y-1 list-disc"><li>Acts that violate laws or public order and morals</li><li>Acts that infringe intellectual property rights or privacy of the Operator or third parties</li><li>Unauthorized access to the Service's systems</li><li>Acts that interfere with the operation of the Service</li><li>Any other act deemed inappropriate by the Operator</li></ul></div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">4</span>Intellectual Property Rights</h3>
+        <p class="text-sm leading-relaxed text-slate-600">Copyrights and other intellectual property rights related to the Service, including its content, design, and software, belong to the Operator or legitimate rights holders. Unauthorized reproduction, publication, modification, redistribution, or other secondary use is prohibited.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">5</span>Disclaimer</h3>
+        <p class="text-sm leading-relaxed text-slate-600">The Operator does not guarantee the completeness, accuracy, continuity, or fitness for a particular purpose of the Service. In particular, store operation data, analysis results, and AI-generated analyses and recommendations may contain errors and may not match actual conditions. The Operator shall not be liable for damages incurred by users due to the use or inability to use the Service, except in cases of willful misconduct or gross negligence by the Operator.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">6</span>Suspension or Termination of the Service</h3>
+        <p class="text-sm leading-relaxed text-slate-600">The Operator may suspend or terminate all or part of the Service without prior notice due to system maintenance, failures, communication issues, suspension of external services, or other reasons. The Operator shall not be liable for damages incurred by users as a result, except in cases of willful misconduct or gross negligence by the Operator.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">7</span>Changes to the Terms</h3>
+        <p class="text-sm leading-relaxed text-slate-600">The Operator may amend these Terms when deemed necessary. Revised Terms become effective when posted on this page or otherwise notified by a method deemed appropriate by the Operator. Continued use of the Service after such changes constitutes agreement to the revised Terms.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 sm:p-8 ring-1 ring-slate-200 shadow-sm">
+        <h3 class="mb-3 flex items-center gap-3 text-base font-black text-slate-800"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[11px] font-black text-white shrink-0">8</span>Governing Law</h3>
+        <p class="text-sm leading-relaxed text-slate-600">These Terms shall be governed by the laws of Japan.</p>
+      </div>
+    `;
+
+    function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+
+    function applyLanguage(lang) {
+      document.documentElement.lang = lang;
+      if (lang === 'en') {
+        document.title = 'Terms of Service | LUNDRET';
+        setText('navFeatures', 'Features'); setText('navExamples', 'Use Cases'); setText('navContact', 'Contact');
+        setText('navLogin', 'Log In'); setText('mobileLogin', 'Log In');
+        setText('navCtaText', 'Get Started'); setText('mobileCtaText', 'Get Started');
+        setText('termsPageTitle', 'Terms of Service');
+        setText('termsPageDates', 'Effective Date: 2026/2/22  Last Updated: 2026/2/22');
+        setText('termsLeadText', 'These Terms of Service define the conditions for using the LUNDRET service (the "Service") provided by Genki Kondo (the "Operator"). By using the Service, users are deemed to have agreed to these Terms.');
+        setText('termsFooterCopyright', 'Copyright to the content published on this site belongs to Genki Kondo or the respective rights holders.');
+        setText('footerPrivacy', 'Privacy Policy'); setText('footerTerms', 'Terms of Service');
+        setText('footerCopyright', '© 2026 Genki Kondo');
+        const sections = document.getElementById('termsSections');
+        if (sections) sections.innerHTML = enSections;
+      } else {
+        document.title = '利用規約 | LUNDRET';
+        setText('navFeatures', '機能'); setText('navExamples', '活用事例'); setText('navContact', 'お問い合わせ');
+        setText('navLogin', 'ログイン'); setText('mobileLogin', 'ログイン');
+        setText('navCtaText', '無料で導入'); setText('mobileCtaText', '無料で導入');
+        setText('footerPrivacy', 'プライバシーポリシー'); setText('footerTerms', '利用規約');
+        setText('footerCopyright', '© 2026 近藤元樹');
+      }
+    }
+
+    function setActiveLang(lang) {
+      const ja = document.getElementById('langBtnJa');
+      const en = document.getElementById('langBtnEn');
+      ja.className = `px-2.5 py-1 text-[11px] font-bold rounded-full transition-all ${lang === 'ja' ? 'bg-white text-navy' : 'text-white/60 hover:text-white'}`;
+      en.className = `px-2.5 py-1 text-[11px] font-bold rounded-full transition-all ${lang === 'en' ? 'bg-white text-navy' : 'text-white/60 hover:text-white'}`;
+    }
+
+    let currentLang = 'ja';
+    try { currentLang = localStorage.getItem('lundret_lang') === 'en' ? 'en' : 'ja'; } catch (_) {}
+    applyLanguage(currentLang);
+    setActiveLang(currentLang);
+
+    document.getElementById('langBtnJa').addEventListener('click', () => {
+      currentLang = 'ja';
+      try { localStorage.setItem('lundret_lang', 'ja'); } catch (_) {}
+      applyLanguage('ja'); setActiveLang('ja');
+    });
+    document.getElementById('langBtnEn').addEventListener('click', () => {
+      currentLang = 'en';
+      try { localStorage.setItem('lundret_lang', 'en'); } catch (_) {}
+      applyLanguage('en'); setActiveLang('en');
+    });
   </script>
 </body>
-
 </html>
