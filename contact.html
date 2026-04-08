@@ -433,5 +433,17 @@
       document.getElementById('langBtnJa').classList.add('text-white/60');
     }
   </script>
+  <script>
+    (function() {
+      var primary = 'https://app.lundret.com';
+      var fallback = 'https://lundret.vercel.app';
+      fetch(primary, { mode: 'no-cors', signal: AbortSignal.timeout(3000) })
+        .catch(function() {
+          document.querySelectorAll('#navLogin, #mobileLogin').forEach(function(el) {
+            el.href = fallback;
+          });
+        });
+    })();
+  </script>
 </body>
 </html>
