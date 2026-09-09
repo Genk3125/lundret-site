@@ -1,0 +1,20 @@
+name: ChatGPT Temp Video Fetch
+on:
+  push:
+    branches: [chatgpt-temp-video-fetch-2096973154732081632]
+  workflow_dispatch:
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch video
+        run: |
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://video-s.twimg.com/amplify_video/2096970070283128833/vid/avc1/1920x1080/AFYuwiRiFVAlzB5o.mp4?tag=29' -o video.mp4
+          file video.mp4
+          ls -lh video.mp4
+      - name: Upload video artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-video
+          path: video.mp4
+          retention-days: 1
