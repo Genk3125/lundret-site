@@ -1,0 +1,24 @@
+name: TEMP X Video Artifact
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [xvid209697]
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch requested public video
+        run: |
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://video-s.twimg.com/amplify_video/2096970070283128833/vid/avc1/1920x1080/AFYuwiRiFVAlzB5o.mp4?tag=29' -o video.mp4
+          test -s video.mp4
+          file video.mp4
+          ls -lh video.mp4
+      - name: Upload source video
+        uses: actions/upload-artifact@v4
+        with:
+          name: x-source-video
+          path: video.mp4
+          retention-days: 1
